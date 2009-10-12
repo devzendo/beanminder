@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import uk.me.gumbley.minimiser.pluginmanager.PluginException;
 import uk.me.gumbley.minimiser.pluginmanager.PluginHelper;
+import uk.me.gumbley.minimiser.pluginmanager.PluginHelperFactory;
 
 /**
  * Tests that this project's plugin is loaded.
@@ -21,14 +22,10 @@ public final class TestPluginLoading {
      */
     @Test
     public void ourPluginIsLoaded() throws PluginException {
-        try {
-            final PluginHelper pluginHelper = new PluginHelper(false);
-            pluginHelper.loadStandardPlugins();
-            Assert.assertTrue(
-                "Our plugin is not loaded",
-                pluginHelper.getApplicationPlugin() instanceof SimpleAccountsApplicationPlugin);
-        } catch (final Throwable t) {
-            t.printStackTrace();
-        }
+        final PluginHelper pluginHelper = PluginHelperFactory.createMiniMiserPluginHelper();
+        pluginHelper.loadStandardPlugins();
+        Assert.assertTrue(
+            "Our plugin is not loaded",
+            pluginHelper.getApplicationPlugin() instanceof SimpleAccountsApplicationPlugin);
     }
 }

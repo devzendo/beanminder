@@ -37,7 +37,7 @@ public final class SimpleAccountsDatabaseCreatedCorrectly {
     
     @After
     public void tidyDatabases() {
-        //mPersistencePluginHelper.tidyTestDatabasesDirectory();
+        mPersistencePluginHelper.tidyTestDatabasesDirectory();
     }
     
     @Test

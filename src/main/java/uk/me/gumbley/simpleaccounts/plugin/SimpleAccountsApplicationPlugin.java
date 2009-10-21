@@ -1,5 +1,6 @@
 package uk.me.gumbley.simpleaccounts.plugin;
 
+import java.util.Arrays;
 import java.util.List;
 
 import uk.me.gumbley.minimiser.plugin.AbstractPlugin;
@@ -70,8 +71,9 @@ public class SimpleAccountsApplicationPlugin extends AbstractPlugin
     }
 
     public List<String> getApplicationContextResourcePaths() {
-        // TODO Auto-generated method stub
-        return null;
+        return Arrays.asList(new String[] {
+                "uk/me/gumbley/simpleaccounts/SimpleAccounts.xml"
+        });
     }
 
     public void shutdown() {

@@ -7,16 +7,11 @@ import uk.me.gumbley.minimiser.plugin.AbstractPlugin;
 import uk.me.gumbley.minimiser.plugin.ApplicationPlugin;
 import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreation;
 import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
-import uk.me.gumbley.simpleaccounts.plugin.facade.newdatabasecreation.SimpleAccountsNewDatabaseCreationFacade;
 
 public class SimpleAccountsApplicationPlugin extends AbstractPlugin
     implements ApplicationPlugin, NewDatabaseCreation {
 
-    private final SimpleAccountsNewDatabaseCreationFacade mNewDatabaseCreationFacade;
-
     public SimpleAccountsApplicationPlugin() {
-        mNewDatabaseCreationFacade =
-            new SimpleAccountsNewDatabaseCreationFacade();
     }
     
     public String getName() {
@@ -32,7 +27,8 @@ public class SimpleAccountsApplicationPlugin extends AbstractPlugin
     }
 
     public NewDatabaseCreationFacade getNewDatabaseCreationFacade() {
-        return mNewDatabaseCreationFacade;
+        return getSpringLoader().getBean("newDatabaseCreationFacade",
+            NewDatabaseCreationFacade.class);
     }
 
     public String getAboutDetailsResourcePath() {

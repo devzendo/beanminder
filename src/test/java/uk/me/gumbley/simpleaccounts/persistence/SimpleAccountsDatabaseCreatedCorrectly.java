@@ -1,17 +1,11 @@
 package uk.me.gumbley.simpleaccounts.persistence;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import uk.me.gumbley.minimiser.persistence.DAOFactory;
 import uk.me.gumbley.minimiser.persistence.MiniMiserDAOFactory;
-import uk.me.gumbley.minimiser.persistence.PersistencePluginHelper;
-import uk.me.gumbley.minimiser.pluginmanager.PluginException;
-import uk.me.gumbley.minimiser.pluginmanager.PluginHelper;
-import uk.me.gumbley.minimiser.pluginmanager.PluginHelperFactory;
 import uk.me.gumbley.minimiser.util.InstanceSet;
 
 
@@ -20,30 +14,14 @@ import uk.me.gumbley.minimiser.util.InstanceSet;
  * @author matt
  *
  */
-public final class SimpleAccountsDatabaseCreatedCorrectly {
-    private static final String DBNAME = "sadatabase";
-    private static final String DBPASSWORD = "";
-    private PersistencePluginHelper mPersistencePluginHelper;
-    
-    @Before
-    public void getPrerequisites() throws PluginException {
-        final PluginHelper pluginHelper =
-            PluginHelperFactory.createMiniMiserPluginHelper();
-        mPersistencePluginHelper =
-            new PersistencePluginHelper(false, pluginHelper);
-        mPersistencePluginHelper.validateTestDatabaseDirectory();
-        pluginHelper.loadStandardPlugins();
-    }
-    
-    @After
-    public void tidyDatabases() {
-        mPersistencePluginHelper.tidyTestDatabasesDirectory();
-    }
-    
+public final class SimpleAccountsDatabaseCreatedCorrectly extends SimpleAccountsDatabaseTest {
+    /**
+     * 
+     */
     @Test
     public void areTablesCreated() {
         final InstanceSet<DAOFactory> database =
-            mPersistencePluginHelper.createDatabase(
+            getPersistencePluginHelper().createDatabase(
                 DBNAME, DBPASSWORD);
         final MiniMiserDAOFactory miniMiserDAOFactory =
             database.getInstanceOf(MiniMiserDAOFactory.class);

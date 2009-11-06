@@ -8,7 +8,7 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
 
 /**
  * The Data Access Object for Transactions.
- * 
+ *
  * @author matt
  *
  */
@@ -18,9 +18,10 @@ public interface TransactionsDao {
      * @param account the Account whose Transactions are to be
      * found
      * @return the list of Transactions
+     *
      */
-    List<Transaction> findAlltransactionsForAccount(Account account);
-    
+    List<Transaction> findAllTransactionsForAccount(Account account);
+
     /**
      * Save a Transaction under a given account, and update the
      * account's balance with the amount of the transaction.
@@ -32,7 +33,7 @@ public interface TransactionsDao {
      * inserted.
      */
     Pair<Account, Transaction> saveTransaction(Account account, Transaction transaction);
-    
+
     /**
      * Delete a Transaction under a given account, and update the
      * account's balance with the amount of the transaction.

@@ -8,4 +8,7 @@
 	<bean id="newDatabaseCreationFacade" 
 		class="uk.me.gumbley.simpleaccounts.plugin.facade.newdatabasecreation.SimpleAccountsNewDatabaseCreationFacade" />
 
+	<bean id="databaseOpeningFacade" 
+		class="uk.me.gumbley.simpleaccounts.plugin.facade.databaseopening.SimpleAccountsDatabaseOpeningFacade" />
+
 </beans>

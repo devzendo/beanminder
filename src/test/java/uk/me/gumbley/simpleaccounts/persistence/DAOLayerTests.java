@@ -30,8 +30,10 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
                 DBNAME, DBPASSWORD);
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory =
             database.getInstanceOf(SimpleAccountsDAOFactory.class);
+        Assert.assertNotNull(simpleAccountsDaoFactory);
         final AccountsDao accountsDao =
             simpleAccountsDaoFactory.getAccountsDao();
+        Assert.assertNotNull(accountsDao);
 
         final Account newAccount =
             new Account("Test account", "123456",

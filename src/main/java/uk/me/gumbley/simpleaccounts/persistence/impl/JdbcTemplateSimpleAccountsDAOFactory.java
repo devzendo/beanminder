@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import uk.me.gumbley.simpleaccounts.persistence.SimpleAccountsDAOFactory;
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
+import uk.me.gumbley.simpleaccounts.persistence.dao.impl.JdbcTemplateAccountsDao;
+import uk.me.gumbley.simpleaccounts.persistence.dao.impl.JdbcTemplateTransactionsDao;
 
 /**
  * The JdbcTemplate implementation of the SimpleAccountsDAOFactory.
@@ -15,28 +17,30 @@ import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
 public final class JdbcTemplateSimpleAccountsDAOFactory implements
         SimpleAccountsDAOFactory {
 
+    private final JdbcTemplateAccountsDao mAccountsDao;
+    private final JdbcTemplateTransactionsDao mTransactionsDao;
+
     /**
      * Construct the DAOFactory.
      *
      * @param jdbcTemplate the Jdbc Template.
      */
     public JdbcTemplateSimpleAccountsDAOFactory(final SimpleJdbcTemplate jdbcTemplate) {
-        // TODO Auto-generated constructor stub
+        mAccountsDao = new JdbcTemplateAccountsDao(jdbcTemplate);
+        mTransactionsDao = new JdbcTemplateTransactionsDao(jdbcTemplate);
     }
 
     /**
      * {@inheritDoc}
      */
     public AccountsDao getAccountsDao() {
-        // TODO Auto-generated method stub
-        return null;
+        return mAccountsDao;
     }
 
     /**
      * {@inheritDoc}
      */
     public TransactionsDao getTransactionsDao() {
-        // TODO Auto-generated method stub
-        return null;
+        return mTransactionsDao;
     }
 }

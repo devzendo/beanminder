@@ -13,22 +13,23 @@ import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFaca
 
 /**
  * Create the SimpleAccounts database.
- * 
+ *
  * @author matt
  *
  */
 public final class SimpleAccountsNewDatabaseCreationFacade
     implements NewDatabaseCreationFacade {
-    private static final String[] CREATION_DDL_STRINGS = 
+    private static final String[] CREATION_DDL_STRINGS =
         new String[] {
         "CREATE TABLE Accounts("
-                + "id INT PRIMARY KEY,"
+                + "id INT IDENTITY,"
                 + "name VARCHAR(40) NOT NULL,"
                 + "with VARCHAR(40),"
-                + "accountCode VARCHAR(40) NOT NULL"
+                + "accountCode VARCHAR(40) NOT NULL,"
+                + "balance INT"
                 + ")",
         "CREATE TABLE Transactions("
-                + "id INT PRIMARY KEY,"
+                + "id INT IDENTITY,"
                 + "account_id INT NOT NULL,"
                 + "amount INT NOT NULL,"
                 + "isCredit BOOLEAN,"

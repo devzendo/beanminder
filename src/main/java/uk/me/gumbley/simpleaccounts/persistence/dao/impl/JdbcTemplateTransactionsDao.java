@@ -1,7 +1,10 @@
 package uk.me.gumbley.simpleaccounts.persistence.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import uk.me.gumbley.minimiser.util.Pair;
@@ -19,6 +22,10 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
 
     private final SimpleJdbcTemplate mJdbcTemplate;
 
+    /**
+     * Construct the TransactionsDao with a JdbcTemplate
+     * @param jdbcTemplate the template for database access
+     */
     public JdbcTemplateTransactionsDao(final SimpleJdbcTemplate jdbcTemplate) {
         mJdbcTemplate = jdbcTemplate;
     }
@@ -35,8 +42,21 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
      * {@inheritDoc}
      */
     public List<Transaction> findAllTransactionsForAccount(final Account account) {
-        // TODO Auto-generated method stub
-        return null;
+        // TODO if account.id == -1, return empty list
+        final String sql = "select id, account_id, amount, isCredit, isReconciled, transactionDate "
+            + "from Transactions where account_id = ?";
+        final ParameterizedRowMapper<Transaction> mapper = new ParameterizedRowMapper<Transaction>() {
+            public Transaction mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                return new Transaction(
+                    rs.getInt("id"),
+                    rs.getInt("account_id"),
+                    rs.getInt("amount"),
+                    rs.getBoolean("isCredit"),
+                    rs.getBoolean("isReconciled"),
+                    rs.getDate("transactionDate"));
+            }
+        };
+        return mJdbcTemplate.query(sql, mapper, account.getId());
     }
 
     /**

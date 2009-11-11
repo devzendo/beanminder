@@ -54,4 +54,16 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
             transactionsDao.findAllTransactionsForAccount(savedAccount);
         Assert.assertEquals(0, transactions.size());
     }
+
+    // TODO: findAlltransactionsForAccount with a newly constructed
+    // but not saved Account (i.e. its primary key is -1)
+    @Test
+    public void emptyTransactionsForUnsavedAccount() {
+        final InstanceSet<DAOFactory> database =
+            getPersistencePluginHelper().createDatabase(
+                DBNAME, DBPASSWORD);
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory =
+            database.getInstanceOf(SimpleAccountsDAOFactory.class);
+
+    }
 }

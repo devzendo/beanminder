@@ -34,7 +34,7 @@ public final class SimpleAccountsNewDatabaseCreationFacade
                 + "amount INT NOT NULL,"
                 + "isCredit BOOLEAN,"
                 + "isReconciled BOOLEAN,"
-                + "transactiondate DATE,"
+                + "transactionDate DATE,"
                 + ")",
     };
 

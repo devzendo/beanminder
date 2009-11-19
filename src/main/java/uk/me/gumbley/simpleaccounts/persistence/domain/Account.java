@@ -1,5 +1,8 @@
 package uk.me.gumbley.simpleaccounts.persistence.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * An Account POJO.
  *
@@ -101,5 +104,49 @@ public final class Account {
      */
     public int getBalance() {
         return mBalance;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Account other = (Account) obj;
+        return new EqualsBuilder()
+            .append(this.mId, other.mId)
+            .append(this.mName, other.mName)
+            .append(this.mAccountCode, other.mAccountCode)
+            .append(this.mWith, other.mWith)
+            .append(this.mBalance, other.mBalance)
+            .isEquals();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(1, 31)
+            .append(mId)
+            .append(mName)
+            .append(mAccountCode)
+            .append(mWith)
+            .append(mBalance)
+            .toHashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format("id %d name %s account code %s with %s balance %d", mId,
+            mName, mAccountCode, mWith, mBalance);
     }
 }

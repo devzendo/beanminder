@@ -28,6 +28,8 @@ public final class JdbcTemplateSimpleAccountsDAOFactory implements
     public JdbcTemplateSimpleAccountsDAOFactory(final SimpleJdbcTemplate jdbcTemplate) {
         mAccountsDao = new JdbcTemplateAccountsDao(jdbcTemplate);
         mTransactionsDao = new JdbcTemplateTransactionsDao(jdbcTemplate);
+        // cross-wire since transactionsdao needs to update accounts
+        mTransactionsDao.setAccountsDao(mAccountsDao);
     }
 
     /**

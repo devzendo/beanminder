@@ -75,8 +75,15 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
         return new Account(key, account.getName(), account.getAccountCode(), account.getWith(), account.getBalance());
     }
 
-    private Account updateAccount(final Account account) {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * Update an existing account
+     * @param account the account to update, with a valid id
+     * @return the updated account (actually, the same as the input)
+     */
+    Account updateAccount(final Account account) {
+        mJdbcTemplate.update(
+            "UPDATE Accounts set name = ?, with = ?, accountCode = ?, balance = ? WHERE id = ?",
+            new Object[] {account.getName(), account.getWith(), account.getAccountCode(), account.getBalance(), account.getId()});
+        return account;
     }
 }

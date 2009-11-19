@@ -2,6 +2,11 @@ package uk.me.gumbley.simpleaccounts.persistence.domain;
 
 import java.sql.Date;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import uk.me.gumbley.commoncode.datetime.SQLDateUtils;
+
 /**
  * A Transaction POJO.
  *
@@ -33,7 +38,7 @@ public final class Transaction {
      * @param reconciled whether this transaction has been
      * reconciled
      * @param transactionDate the date that this transaction was
-     * made
+     * made; this will be normalised to an SQL Date
      */
     public Transaction(final int id, final int accountId, final int amount, final boolean credit,
             final boolean reconciled, final Date transactionDate) {
@@ -45,7 +50,7 @@ public final class Transaction {
         mAmount = amount;
         mCredit = credit;
         mReconciled = reconciled;
-        mTransactionDate = transactionDate;
+        mTransactionDate = SQLDateUtils.normalise(transactionDate);
     }
 
     /**
@@ -126,5 +131,51 @@ public final class Transaction {
      */
     public int getAccountId() {
         return mAccountId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Transaction other = (Transaction) obj;
+        return new EqualsBuilder()
+            .append(this.mId, other.mId)
+            .append(this.mAccountId, other.mAccountId)
+            .append(this.mAmount, other.mAmount)
+            .append(this.mCredit, other.mCredit)
+            .append(this.mReconciled, other.mReconciled)
+            .append(this.mTransactionDate, other.mTransactionDate)
+            .isEquals();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(1, 31)
+            .append(mId)
+            .append(mAccountId)
+            .append(mAmount)
+            .append(mCredit)
+            .append(mReconciled)
+            .append(mTransactionDate)
+            .toHashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format("id %d account id %d amount %d credit? %s reconciled? %s date %d",
+            mId, mAccountId, mAmount, mCredit, mReconciled, mTransactionDate);
     }
 }

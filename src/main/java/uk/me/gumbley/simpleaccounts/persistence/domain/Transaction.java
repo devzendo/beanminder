@@ -118,7 +118,7 @@ public final class Transaction {
      * @param transactionDate the transactionDate to set
      */
     public void setTransactionDate(final Date transactionDate) {
-        mTransactionDate = transactionDate;
+        mTransactionDate = SQLDateUtils.normalise(transactionDate);
     }
     /**
      * @return the id
@@ -151,7 +151,8 @@ public final class Transaction {
             .append(this.mAmount, other.mAmount)
             .append(this.mCredit, other.mCredit)
             .append(this.mReconciled, other.mReconciled)
-            .append(this.mTransactionDate, other.mTransactionDate)
+            // SQL Dates don't compare well :(
+            .append(this.mTransactionDate.toString(), other.mTransactionDate.toString())
             .isEquals();
     }
 
@@ -175,7 +176,7 @@ public final class Transaction {
      */
     @Override
     public String toString() {
-        return String.format("id %d account id %d amount %d credit? %s reconciled? %s date %d",
+        return String.format("id %d account id %d amount %d credit? %s reconciled? %s date %s",
             mId, mAccountId, mAmount, mCredit, mReconciled, mTransactionDate);
     }
 }

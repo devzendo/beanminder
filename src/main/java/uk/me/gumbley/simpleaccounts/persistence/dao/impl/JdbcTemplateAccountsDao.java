@@ -2,10 +2,12 @@ package uk.me.gumbley.simpleaccounts.persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -42,8 +44,22 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
      * {@inheritDoc}
      */
     public List<Account> findAllAccounts() {
-        // TODO Auto-generated method stub
-        return null;
+        final String sql = "select id, name, with, accountCode, initialBalance, currentBalance from Accounts order by name";
+        final ParameterizedRowMapper<Account> mapper = new ParameterizedRowMapper<Account>() {
+
+            // notice the return type with respect to Java 5 covariant return types
+            public Account mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                final Account account = new Account(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("accountCode"),
+                    rs.getString("with"),
+                    rs.getInt("initialBalance"),
+                    rs.getInt("currentBalance"));
+                return account;
+            }
+        };
+        return mJdbcTemplate.query(sql, mapper);
     }
 
     /**
@@ -62,17 +78,22 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
         mJdbcTemplate.getJdbcOperations().update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(final Connection conn)
                     throws SQLException {
-                final String sql = "INSERT INTO Accounts (name, with, accountCode, balance) values (?, ?, ?, ?)";
+                final String sql = "INSERT INTO Accounts "
+                + "(name, with, accountCode, initialBalance, currentBalance) "
+                + "values (?, ?, ?, ?, ?)";
                 final PreparedStatement ps = conn.prepareStatement(sql, new String[] {"id"});
                 ps.setString(1, account.getName());
                 ps.setString(2, account.getWith());
                 ps.setString(3, account.getAccountCode());
-                ps.setInt(4, account.getBalance());
+                ps.setInt(4, account.getInitialBalance());
+                ps.setInt(5, account.getCurrentBalance());
                 return ps;
             }
         }, keyHolder);
         final int key = keyHolder.getKey().intValue();
-        return new Account(key, account.getName(), account.getAccountCode(), account.getWith(), account.getBalance());
+        return new Account(
+            key, account.getName(), account.getAccountCode(),
+            account.getWith(), account.getInitialBalance(), account.getCurrentBalance());
     }
 
     /**
@@ -82,8 +103,10 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
      */
     Account updateAccount(final Account account) {
         mJdbcTemplate.update(
-            "UPDATE Accounts set name = ?, with = ?, accountCode = ?, balance = ? WHERE id = ?",
-            new Object[] {account.getName(), account.getWith(), account.getAccountCode(), account.getBalance(), account.getId()});
+            "UPDATE Accounts set name = ?, with = ?, accountCode = ?, currentBalance = ?"
+            + "WHERE id = ?",
+            new Object[] {account.getName(), account.getWith(), account.getAccountCode(),
+                    account.getCurrentBalance(), account.getId()});
         return account;
     }
 }

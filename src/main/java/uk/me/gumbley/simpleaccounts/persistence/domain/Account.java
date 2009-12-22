@@ -14,7 +14,8 @@ public final class Account {
     private String mName;
     private String mAccountCode;
     private String mWith;
-    private final int mBalance;
+    private final int mInitialBalance;
+    private final int mCurrentBalance;
 
     /**
      * Create an Account. Note that the balance can only be set on
@@ -24,20 +25,23 @@ public final class Account {
      * This version of the constructor is intended for use by the
      * DAO Layer. Client code should use the other constructor (the
      * one without the primary key) as it does not know the key
-     * until the Account is saved.
+     * until the Account is saved. Also, the current balance cannot
+     * be altered directly by client code (instead, Transactions are added).
      * @param id the primary key
      * @param name the name of this Account e.g. "Personal Savings"
      * @param accountCode the bank's code for this, e.g. "22636364"
      * @param with which bank holds this account, e.g. "Lloyd's"
      * @param initialBalance the initial balance
+     * @param currentBalance the current balance
      */
-    public Account(final int id, final String name, final String accountCode, final String with, final int initialBalance)
-    {
+    public Account(final int id, final String name, final String accountCode,
+            final String with, final int initialBalance, final int currentBalance) {
         mId = id;
         mName = name;
         mAccountCode = accountCode;
         mWith = with;
-        mBalance = initialBalance;
+        mInitialBalance = initialBalance;
+        mCurrentBalance = currentBalance;
     }
 
     /**
@@ -46,15 +50,15 @@ public final class Account {
      * modified or removed.
      * <p>
      * This version of the constructor is intended for use by
-     * client code.
+     * client code, when an Account is first created.
      * @param name the name of this Account e.g. "Personal Savings"
      * @param accountCode the bank's code for this, e.g. "22636364"
      * @param with which bank holds this account, e.g. "Lloyd's"
      * @param initialBalance the initial balance
      */
-    public Account(final String name, final String accountCode, final String with, final int initialBalance)
-    {
-        this(-1, name, accountCode, with, initialBalance);
+    public Account(final String name, final String accountCode, final String with,
+            final int initialBalance) {
+        this(-1, name, accountCode, with, initialBalance, initialBalance);
     }
 
     /**
@@ -63,47 +67,61 @@ public final class Account {
     public String getName() {
         return mName;
     }
+
     /**
      * @param name the name to set
      */
     public void setName(final String name) {
         mName = name;
     }
+
     /**
      * @return the accountCode
      */
     public String getAccountCode() {
         return mAccountCode;
     }
+
     /**
      * @param accountCode the accountCode to set
      */
     public void setAccountCode(final String accountCode) {
         mAccountCode = accountCode;
     }
+
     /**
      * @return the with
      */
     public String getWith() {
         return mWith;
     }
+
     /**
      * @param with the with to set
      */
     public void setWith(final String with) {
         mWith = with;
     }
+
     /**
      * @return the id
      */
     public int getId() {
         return mId;
     }
+
     /**
-     * @return the balance
+     * @return the current account balance, after all Transactions have been applied
      */
-    public int getBalance() {
-        return mBalance;
+    public int getCurrentBalance() {
+        return mCurrentBalance;
+    }
+
+    /**
+     * @return the initial account balance, before all Transactions have been applied
+     */
+    public int getInitialBalance() {
+        return mInitialBalance;
     }
 
     /**
@@ -123,7 +141,8 @@ public final class Account {
             .append(this.mName, other.mName)
             .append(this.mAccountCode, other.mAccountCode)
             .append(this.mWith, other.mWith)
-            .append(this.mBalance, other.mBalance)
+            .append(this.mCurrentBalance, other.mCurrentBalance)
+            .append(this.mInitialBalance, other.mInitialBalance)
             .isEquals();
     }
 
@@ -137,7 +156,8 @@ public final class Account {
             .append(mName)
             .append(mAccountCode)
             .append(mWith)
-            .append(mBalance)
+            .append(mCurrentBalance)
+            .append(mInitialBalance)
             .toHashCode();
     }
 
@@ -146,7 +166,7 @@ public final class Account {
      */
     @Override
     public String toString() {
-        return String.format("id %d name %s account code %s with %s balance %d", mId,
-            mName, mAccountCode, mWith, mBalance);
+        return String.format("id %d name %s account code %s with %s initial balance %d current balance %d",
+            mId, mName, mAccountCode, mWith, mInitialBalance, mCurrentBalance);
     }
 }

@@ -26,7 +26,8 @@ public final class SimpleAccountsNewDatabaseCreationFacade
                 + "name VARCHAR(40) NOT NULL,"
                 + "with VARCHAR(40),"
                 + "accountCode VARCHAR(40) NOT NULL,"
-                + "balance INT"
+                + "initialBalance INT,"
+                + "currentBalance INT"
                 + ")",
         "CREATE TABLE Transactions("
                 + "id INT IDENTITY,"

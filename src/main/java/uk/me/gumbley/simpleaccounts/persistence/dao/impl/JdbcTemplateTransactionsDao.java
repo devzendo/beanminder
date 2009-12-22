@@ -89,7 +89,7 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
     public Pair<Account, Transaction> saveTransaction(
             final Account account,
             final Transaction transaction) {
-        if (transaction.getAmount() < 0) {
+        if (transaction.getAmount() <= 0) {
             throw new IllegalArgumentException("Transaction amount must be positive, not "
                 + transaction.getAmount());
         }
@@ -141,8 +141,8 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
             transaction.getAmount(), transaction.isCredit(), transaction.isReconciled(),
             transaction.getTransactionDate());
         // Update the account balance
-        final int newBalance = account.getBalance() + (transaction.isCredit() ? transaction.getAmount() : (-1 * transaction.getAmount()));
-        final Account newBalanceAccount = new Account(account.getId(), account.getName(), account.getAccountCode(), account.getWith(), newBalance);
+        final int newBalance = account.getCurrentBalance() + (transaction.isCredit() ? transaction.getAmount() : (-1 * transaction.getAmount()));
+        final Account newBalanceAccount = new Account(account.getId(), account.getName(), account.getAccountCode(), account.getWith(), account.getInitialBalance(), newBalance);
         final Account updatedAccount = mJdbcTemplateAccountsDao.updateAccount(newBalanceAccount);
         return new Pair<Account, Transaction>(updatedAccount, savedTransaction);
     }

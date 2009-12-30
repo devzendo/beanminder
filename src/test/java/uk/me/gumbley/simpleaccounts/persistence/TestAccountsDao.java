@@ -23,7 +23,7 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
  * @author matt
  *
  */
-public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
+public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     /**
      *
      */
@@ -56,6 +56,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
             size());
     }
 
+    /**
+     * 
+     */
     @Test
     public void someAccountDetailsCanBeChanged() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -84,6 +87,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
     }
 
 
+    /**
+     * 
+     */
     @Test(expected = DataAccessException.class)
     public void cannotCommitTransactionAgainstUnsavedAccount() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -94,6 +100,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
             findAllTransactionsForAccount(newAccount);
     }
 
+    /**
+     * 
+     */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithNegativeAmounts() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -105,6 +114,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
             saveTransaction(savedAccount, newTransaction);
     }
 
+    /**
+     * 
+     */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithZeroAmounts() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -116,6 +128,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
             saveTransaction(savedAccount, newTransaction);
     }
 
+    /**
+     * 
+     */
     @Test
     public void transactionCanBeAddedToAccount() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -143,6 +158,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(savedTransaction, transactions.get(0));
     }
 
+    /**
+     * 
+     */
     @Test
     public void addCreditTransactionToAccountIncreasesBalance() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -157,6 +175,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(5600, pair.getFirst().getInitialBalance());
     }
 
+    /**
+     * 
+     */
     @Test
     public void addDebitTransactionToAccountDecreasesBalance() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -171,6 +192,9 @@ public final class DAOLayerTests extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(5600, pair.getFirst().getInitialBalance());
     }
 
+    /**
+     * 
+     */
     @Test
     public void accountsCanBeListed() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();

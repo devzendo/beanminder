@@ -41,10 +41,26 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
     }
 
     /**
+     * For use by the DAO layer, load an account given its data which may be old.
+     * @param account the account to reload
+     * @return the reloaded Account
+     */
+    Account loadAccount(final Account account) {
+        final String sql = "SELECT id, name, with, accountCode, initialBalance, currentBalance FROM Accounts WHERE id = ?";
+        final ParameterizedRowMapper<Account> mapper = createAccountMapper();
+        return mJdbcTemplate.queryForObject(sql, mapper, account.getId());
+    }
+
+    /**
      * {@inheritDoc}
      */
     public List<Account> findAllAccounts() {
-        final String sql = "select id, name, with, accountCode, initialBalance, currentBalance from Accounts order by name";
+        final String sql = "SELECT id, name, with, accountCode, initialBalance, currentBalance FROM Accounts ORDER BY name";
+        final ParameterizedRowMapper<Account> mapper = createAccountMapper();
+        return mJdbcTemplate.query(sql, mapper);
+    }
+
+    private ParameterizedRowMapper<Account> createAccountMapper() {
         final ParameterizedRowMapper<Account> mapper = new ParameterizedRowMapper<Account>() {
 
             // notice the return type with respect to Java 5 covariant return types
@@ -59,7 +75,7 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
                 return account;
             }
         };
-        return mJdbcTemplate.query(sql, mapper);
+        return mapper;
     }
 
     /**

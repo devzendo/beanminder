@@ -43,4 +43,11 @@ public interface TransactionsDao {
      * @return the account with updated balance.
      */
     Account deleteTransaction(Account account, Transaction transaction);
+
+    /**
+     * How many Transactions are there in this Account?
+     * @param account the Account to count.
+     * @return the number of Transactions in the Account
+     */
+    int getNumberOfTransactions(Account account);
 }

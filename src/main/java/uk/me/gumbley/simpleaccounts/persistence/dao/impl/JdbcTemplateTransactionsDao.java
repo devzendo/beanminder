@@ -60,14 +60,14 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
      */
     public List<Transaction> findAllTransactionsForAccount(final Account account) {
         ensureAccountSaved(account);
-        final String sql = "select id, account_id, index, amount, isCredit, isReconciled, transactionDate, accountBalance "
-            + "from Transactions where account_id = ?";
+        final String sql = "select id, accountId, index, amount, isCredit, isReconciled, transactionDate, accountBalance "
+            + "from Transactions where accountId = ?";
 // TODO add test for this            + "order by index";
         final ParameterizedRowMapper<Transaction> mapper = new ParameterizedRowMapper<Transaction>() {
             public Transaction mapRow(final ResultSet rs, final int rowNum) throws SQLException {
                 return new Transaction(
                     rs.getInt("id"),
-                    rs.getInt("account_id"),
+                    rs.getInt("accountId"),
                     rs.getInt("index"),
                     rs.getInt("amount"),
                     rs.getBoolean("isCredit"),
@@ -115,12 +115,14 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
     private Pair<Account, Transaction> insertTransaction(
             final Account account,
             final Transaction transaction) {
+        // Always reload the account to get the correct balance.
+        final Account reloadedAccount = mJdbcTemplateAccountsDao.loadAccount(account);
         // Save the transaction
         final KeyHolder keyHolder = new GeneratedKeyHolder();
         /*
          *    "CREATE TABLE Transactions("
                 + "id INT IDENTITY,"
-                + "account_id INT NOT NULL,"
+                + "accountId INT NOT NULL,"
                 + "index INT NOT NULL,"
                 + "amount INT NOT NULL,"
                 + "isCredit BOOLEAN,"
@@ -129,16 +131,19 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
                 + "accountBalance INT"
                 + ")",
          */
-        final int transactionIndex = 0; // TODO increment this to count(*) Transactions
-        final int newBalance = account.getCurrentBalance() + (transaction.isCredit() ? transaction.getAmount() : (-1 * transaction.getAmount()));
+        final int transactionIndex = getNumberOfTransactions(reloadedAccount);
+        final int newBalance = reloadedAccount.getCurrentBalance()
+            + (transaction.isCredit() ?
+                    transaction.getAmount() :
+                    (-1 * transaction.getAmount()));
         mJdbcTemplate.getJdbcOperations().update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(final Connection conn)
                     throws SQLException {
                 final String sql = "INSERT INTO Transactions "
-                    + "(account_id, index, amount, isCredit, isReconciled, "
+                    + "(accountId, index, amount, isCredit, isReconciled, "
                     + "transactionDate, accountBalance) values (?, ?, ?, ?, ?, ?, ?)";
                 final PreparedStatement ps = conn.prepareStatement(sql, new String[] {"id"});
-                ps.setInt(1, account.getId());
+                ps.setInt(1, reloadedAccount.getId());
                 ps.setInt(2, transactionIndex);
                 ps.setInt(3, transaction.getAmount());
                 ps.setBoolean(4, transaction.isCredit());
@@ -149,15 +154,25 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
             }
         }, keyHolder);
         final int key = keyHolder.getKey().intValue();
-        final Transaction savedTransaction = new Transaction(key, account.getId(),
+        final Transaction savedTransaction = new Transaction(key, reloadedAccount.getId(),
             transactionIndex, transaction.getAmount(), transaction.isCredit(),
-            transaction.isReconciled(), transaction.getTransactionDate(), 
+            transaction.isReconciled(), transaction.getTransactionDate(),
             newBalance);
         // Update the account balance
         final Account newBalanceAccount = new Account(
-            account.getId(), account.getName(), account.getAccountCode(), 
-            account.getWith(), account.getInitialBalance(), newBalance);
+            reloadedAccount.getId(), reloadedAccount.getName(), reloadedAccount.getAccountCode(),
+            reloadedAccount.getWith(), reloadedAccount.getInitialBalance(), newBalance);
         final Account updatedAccount = mJdbcTemplateAccountsDao.updateAccount(newBalanceAccount);
         return new Pair<Account, Transaction>(updatedAccount, savedTransaction);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int getNumberOfTransactions(final Account account) {
+        final int count = mJdbcTemplate.queryForInt(
+            "SELECT COUNT(*) FROM Transactions WHERE accountId = ?",
+            new Object[]{account.getId()});
+        return count;
     }
 }

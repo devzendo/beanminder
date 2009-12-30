@@ -31,7 +31,7 @@ public final class SimpleAccountsNewDatabaseCreationFacade
                 + ")",
         "CREATE TABLE Transactions("
                 + "id INT IDENTITY,"
-                + "account_id INT NOT NULL,"
+                + "accountId INT NOT NULL,"
                 + "index INT NOT NULL,"
                 + "amount INT NOT NULL,"
                 + "isCredit BOOLEAN,"

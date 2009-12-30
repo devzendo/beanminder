@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 
-import uk.me.gumbley.commoncode.datetime.SQLDateUtils;
 import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
@@ -55,7 +54,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void someAccountDetailsCanBeChanged() {
@@ -86,7 +85,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
 
 
     /**
-     * 
+     *
      */
     @Test(expected = DataAccessException.class)
     public void cannotCommitTransactionAgainstUnsavedAccount() {
@@ -99,7 +98,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithNegativeAmounts() {
@@ -113,7 +112,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithZeroAmounts() {
@@ -127,7 +126,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void transactionCanBeAddedToAccount() {
@@ -157,7 +156,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void addCreditTransactionToAccountIncreasesBalance() {
@@ -174,7 +173,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void addDebitTransactionToAccountDecreasesBalance() {
@@ -191,7 +190,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void accountsCanBeListed() {

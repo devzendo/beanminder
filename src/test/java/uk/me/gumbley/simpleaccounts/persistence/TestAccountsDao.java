@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 
 import uk.me.gumbley.commoncode.datetime.SQLDateUtils;
-import uk.me.gumbley.minimiser.persistence.DAOFactory;
-import uk.me.gumbley.minimiser.util.InstanceSet;
 import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
@@ -18,7 +16,7 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
 
 
 /**
- * Tests the correct operation of the DAO Layer.
+ * Tests the correct operation of the DAO Layer's AccountsDao.
  *
  * @author matt
  *
@@ -209,39 +207,5 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
         // ordered by name
         Assert.assertTrue(allAccounts.get(0).equals(savedAccountTwo));
         Assert.assertTrue(allAccounts.get(1).equals(savedAccountOne));
-    }
-
-    private SimpleAccountsDAOFactory createTestDatabase() {
-        final InstanceSet<DAOFactory> database =
-            getPersistencePluginHelper().createDatabase(
-                DBNAME, DBPASSWORD);
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory =
-            database.getInstanceOf(SimpleAccountsDAOFactory.class);
-        return simpleAccountsDaoFactory;
-    }
-
-    private Account createTestAccount() {
-        final Account newAccount =
-            new Account("Test account", "123456",
-                "Imaginary Bank of London", 5600);
-        return newAccount;
-    }
-
-    private Account createSecondTestAccount() {
-        final Account newAccount =
-            new Account("Aardvark Test account", "867456",
-                "Imaginary Bank of London", 50);
-        return newAccount;
-    }
-
-    private Account saveTestAccount(
-            final SimpleAccountsDAOFactory simpleAccountsDaoFactory, final Account account) {
-        final Account savedAccount =
-            simpleAccountsDaoFactory.getAccountsDao().saveAccount(account);
-        return savedAccount;
-    }
-
-    private Date todayNormalised() {
-        return SQLDateUtils.normalise(new Date(System.currentTimeMillis()));
     }
 }

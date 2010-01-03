@@ -5,6 +5,7 @@ import java.sql.Date;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
@@ -18,6 +19,16 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
  *
  */
 public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
+
+    /**
+     * 
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void transactionsCannotBeAddedToANewAccount() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        simpleAccountsDaoFactory.getTransactionsDao().saveTransaction(createTestAccount(),
+            new Transaction(200, true, false, todayNormalised()));
+    }
 
     /**
      *

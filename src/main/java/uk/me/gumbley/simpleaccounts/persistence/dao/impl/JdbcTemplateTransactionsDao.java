@@ -60,9 +60,9 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
      */
     public List<Transaction> findAllTransactionsForAccount(final Account account) {
         ensureAccountSaved(account);
-        final String sql = "select id, accountId, index, amount, isCredit, isReconciled, transactionDate, accountBalance "
-            + "from Transactions where accountId = ?";
-// TODO add test for this            + "order by index";
+        final String sql = "SELECT id, accountId, index, amount, isCredit, isReconciled, transactionDate, accountBalance "
+            + "FROM Transactions WHERE accountId = ?"
+            + "ORDER BY index ASC";
         final ParameterizedRowMapper<Transaction> mapper = new ParameterizedRowMapper<Transaction>() {
             public Transaction mapRow(final ResultSet rs, final int rowNum) throws SQLException {
                 return new Transaction(

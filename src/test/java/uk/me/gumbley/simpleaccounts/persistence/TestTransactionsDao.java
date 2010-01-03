@@ -1,6 +1,7 @@
 package uk.me.gumbley.simpleaccounts.persistence;
 
 import java.sql.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -98,5 +99,46 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(2, savedTransaction3.getIndex());
         Assert.assertEquals(5810, savedTransaction3.getAccountBalance());
         Assert.assertEquals(5810, savedAccount3.getCurrentBalance());
+    }
+    
+    /**
+     * 
+     */
+    /**
+     * 
+     */
+    @Test
+    public void transactionsAreListedOrderedByIndex() {
+        // if the select is not ordered by index, this insertion seems to yield
+        // a list in the order inserted here, but it needs the ORDER BY index
+        // ASC for correctness, so I'll test for it anyway
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final Account newAccount = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+            newAccount);
+        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final Date todayNormalised = todayNormalised();
+        // Transaction 1
+        final Transaction newTransaction1 = new Transaction(200, true, false,
+                todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction1);
+
+        // Transaction 2
+        final Transaction newTransaction2 = new Transaction(20, true, false,
+            todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction2);
+
+        // Transaction 3
+        final Transaction newTransaction3 = new Transaction(10, false, false,
+            todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction3);
+        
+        final List<Transaction> allTransactions = transactionsDao.findAllTransactionsForAccount(savedAccount);
+        Assert.assertEquals(200, allTransactions.get(0).getAmount());
+        Assert.assertEquals(0, allTransactions.get(0).getIndex());
+        Assert.assertEquals(20, allTransactions.get(1).getAmount());
+        Assert.assertEquals(1, allTransactions.get(1).getIndex());
+        Assert.assertEquals(10, allTransactions.get(2).getAmount());
+        Assert.assertEquals(2, allTransactions.get(2).getIndex());
     }
 }

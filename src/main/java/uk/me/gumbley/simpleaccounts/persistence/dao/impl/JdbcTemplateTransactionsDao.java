@@ -43,8 +43,6 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
      */
     public void setAccountsDao(final JdbcTemplateAccountsDao accountsDao) {
         mJdbcTemplateAccountsDao = accountsDao;
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -108,6 +106,15 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
     private Pair<Account, Transaction> updateTransaction(
             final Account account,
             final Transaction transaction) {
+        // Always reload the account to get the correct balance.
+        final Account reloadedAccount = mJdbcTemplateAccountsDao.loadAccount(account);
+        final int numberOfTransactions = getNumberOfTransactions(reloadedAccount);
+        // WOZERE: need to get the committed version of this transaction.
+        // take it off the account (know whether it's a credit/debit), apply this
+        // to all the subsequent transactions.
+        // then apply this updated transaction (credit/debit flag may have
+        // changed) to the account and all subsequent transactions.
+        
         // TODO Auto-generated method stub
         return null;
     }

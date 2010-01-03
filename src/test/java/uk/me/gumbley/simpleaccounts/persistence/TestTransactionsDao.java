@@ -104,9 +104,6 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
     /**
      * 
      */
-    /**
-     * 
-     */
     @Test
     public void transactionsAreListedOrderedByIndex() {
         // if the select is not ordered by index, this insertion seems to yield
@@ -140,5 +137,58 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(1, allTransactions.get(1).getIndex());
         Assert.assertEquals(10, allTransactions.get(2).getAmount());
         Assert.assertEquals(2, allTransactions.get(2).getIndex());
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void updateATransactionAndSubsequentTransactionsAndAccountBalanceUpdated() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final Account newAccount = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+            newAccount);
+        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final Date todayNormalised = todayNormalised();
+        // Transaction 1
+        final Transaction newTransaction1 = new Transaction(200, true, false,
+                todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction1);
+
+        // Transaction 2
+        final Transaction newTransaction2 = new Transaction(20, true, false,
+            todayNormalised);
+        final Pair<Account, Transaction> savedTransaction2Pair = 
+            transactionsDao.saveTransaction(savedAccount, newTransaction2);
+        final Transaction savedTransaction2 = savedTransaction2Pair.getSecond();
+
+        // Transaction 3
+        final Transaction newTransaction3 = new Transaction(10, false, false,
+            todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction3);
+        
+        // Update Transaction 2
+        savedTransaction2.setAmount(30); // +10
+        transactionsDao.saveTransaction(savedAccount, savedTransaction2);
+        
+        // Has the account been modified?
+        final Account reloadedAccount = savedTransaction2Pair.getFirst();
+        Assert.assertEquals(5820, reloadedAccount.getCurrentBalance());
+        
+        final List<Transaction> allTransactions = transactionsDao.findAllTransactionsForAccount(savedAccount);
+        Assert.assertEquals(200, allTransactions.get(0).getAmount());
+        Assert.assertEquals(0, allTransactions.get(0).getIndex());
+        Assert.assertEquals(5800, allTransactions.get(0).getAccountBalance());
+        Assert.assertEquals(30, allTransactions.get(1).getAmount());
+        Assert.assertEquals(1, allTransactions.get(1).getIndex());
+        Assert.assertEquals(5830, allTransactions.get(1).getAccountBalance());
+        Assert.assertEquals(10, allTransactions.get(2).getAmount());
+        Assert.assertEquals(2, allTransactions.get(2).getIndex());
+        Assert.assertEquals(5820, allTransactions.get(2).getAccountBalance());
+    }
+    
+    @Test
+    public void updateATransactionByAlsoChangingCreditDebitFlag() {
+        Assert.fail("unfinished");
     }
 }

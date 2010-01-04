@@ -308,6 +308,9 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
        Assert.assertEquals(6110, allTransactions.get(2).getAccountBalance());
    }
 
+   /**
+    *
+    */
    @Test(expected = DataIntegrityViolationException.class)
    public void cannotDeleteATransactionGivenAnUnsavedAccount() {
        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
@@ -315,7 +318,9 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
            new Transaction(200, true, false, todayNormalised()));
    }
 
-
+   /**
+    *
+    */
    @Test(expected = DataIntegrityViolationException.class)
    public void cannotDeleteAnUnsavedTransaction() {
        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();

@@ -14,11 +14,10 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
  */
 public interface TransactionsDao {
     /**
-     * Obtain all transactions for an account.
+     * Obtain all transactions for an account, ordered by transaction index.
      * @param account the Account whose Transactions are to be
      * found
      * @return the list of Transactions
-     *
      */
     List<Transaction> findAllTransactionsForAccount(Account account);
 

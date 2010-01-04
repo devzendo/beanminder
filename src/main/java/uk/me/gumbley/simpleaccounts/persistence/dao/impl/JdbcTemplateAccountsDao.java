@@ -96,7 +96,7 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
                     throws SQLException {
                 final String sql = "INSERT INTO Accounts "
                 + "(name, with, accountCode, initialBalance, currentBalance) "
-                + "values (?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?)";
                 final PreparedStatement ps = conn.prepareStatement(sql, new String[] {"id"});
                 ps.setString(1, account.getName());
                 ps.setString(2, account.getWith());
@@ -119,7 +119,7 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
      */
     Account updateAccount(final Account account) {
         mJdbcTemplate.update(
-            "UPDATE Accounts set name = ?, with = ?, accountCode = ?, currentBalance = ?"
+            "UPDATE Accounts SET name = ?, with = ?, accountCode = ?, currentBalance = ?"
             + "WHERE id = ?",
             new Object[] {account.getName(), account.getWith(), account.getAccountCode(),
                     account.getCurrentBalance(), account.getId()});

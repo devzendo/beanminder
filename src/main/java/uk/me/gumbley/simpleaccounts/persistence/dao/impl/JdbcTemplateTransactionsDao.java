@@ -124,6 +124,18 @@ public final class JdbcTemplateTransactionsDao implements TransactionsDao {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public List<Transaction> findAllTransactionsForAccountByIndexRange(final Account account, final int fromIndex, final int toIndex) {
+        ensureAccountSaved(account);
+        final String sql = "SELECT id, accountId, index, amount, isCredit, isReconciled, transactionDate, accountBalance "
+            + "FROM Transactions WHERE accountId = ? AND (index >= ? AND index <= ?)"
+            + "ORDER BY index ASC";
+        final ParameterizedRowMapper<Transaction> mapper = createTransactionMapper();
+        return mJdbcTemplate.query(sql, mapper, account.getId(), fromIndex, toIndex);
+    }
+
+    /**
      * For use by the DAO layer, reload the transaction given its data that may be old
      * @param transaction the transaction to reload
      * @return the loaded transaction

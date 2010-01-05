@@ -16,7 +16,7 @@ import uk.me.gumbley.minimiser.util.InstanceSet;
  */
 public final class SimpleAccountsDatabaseCreatedCorrectly extends SimpleAccountsDatabaseTest {
     /**
-     * 
+     *
      */
     @Test
     public void areTablesCreated() {
@@ -29,13 +29,13 @@ public final class SimpleAccountsDatabaseCreatedCorrectly extends SimpleAccounts
             final SimpleJdbcTemplate jdbcTemplate =
                 miniMiserDAOFactory.
                     getSQLAccess().getSimpleJdbcTemplate();
-            
+
             final int accounts = jdbcTemplate.queryForInt(
-                "select count(*) from Accounts");
+                "SELECT COUNT(*) FROM Accounts");
             Assert.assertTrue(accounts == 0);
 
             final int transactions = jdbcTemplate.queryForInt(
-                "select count(*) from Transactions");
+                "SELECT COUNT(*) FROM Transactions");
             Assert.assertTrue(transactions == 0);
 
         } finally {

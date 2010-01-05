@@ -22,6 +22,17 @@ public interface TransactionsDao {
     List<Transaction> findAllTransactionsForAccount(Account account);
 
     /**
+     * Obtain a range of transactions for an account, ordered by transaction index,
+     * starting at a 'from' index to a 'to' index (inclusive).
+     * @param account the Account whose Transactions are to be
+     * found
+     * @param fromIndex the lowest transaction index in the range
+     * @param toIndex the highest transaction index in the range
+     * @return the list of Transactions
+     */
+    List<Transaction> findAllTransactionsForAccountByIndexRange(Account account, int fromIndex, int toIndex);
+
+    /**
      * Save a Transaction under a given account, and update the
      * account's balance with the amount of the transaction.
      * @param account the account with which to update with this

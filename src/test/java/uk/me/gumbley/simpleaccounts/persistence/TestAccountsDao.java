@@ -6,7 +6,12 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import uk.me.gumbley.minimiser.persistence.DAOFactory;
+import uk.me.gumbley.minimiser.persistence.MiniMiserDAOFactory;
+import uk.me.gumbley.minimiser.util.InstanceSet;
 import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
@@ -27,9 +32,7 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
     @Test
     public void createEmptyAccount() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-        final AccountsDao accountsDao =
-            simpleAccountsDaoFactory.getAccountsDao();
-
+        final AccountsDao accountsDao = simpleAccountsDaoFactory.getAccountsDao();
         final Account newAccount = createTestAccount();
         final Account savedAccount =
             accountsDao.saveAccount(newAccount);
@@ -206,5 +209,53 @@ public final class TestAccountsDao extends SimpleAccountsDatabaseTest {
         // ordered by name
         Assert.assertTrue(allAccounts.get(0).equals(savedAccountTwo));
         Assert.assertTrue(allAccounts.get(1).equals(savedAccountOne));
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void deleteAccountDeletesAccountAndAllReferencedTransactions() {
+        final InstanceSet<DAOFactory> daoFactories = createTestDatabaseReturningAllDAOFactories();
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = daoFactories.getInstanceOf(SimpleAccountsDAOFactory.class);
+        final MiniMiserDAOFactory minimiserDaoFactory = daoFactories.getInstanceOf(MiniMiserDAOFactory.class);
+        final SimpleJdbcTemplate simpleJdbcTemplate = minimiserDaoFactory.getSQLAccess().getSimpleJdbcTemplate();
+
+        final Account account = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, account);
+        final Transaction newTransaction = new Transaction(200, true, false, todayNormalised());
+        final Pair<Account, Transaction> pair = simpleAccountsDaoFactory.getTransactionsDao().
+            saveTransaction(savedAccount, newTransaction);
+        final Transaction savedTransaction = pair.getSecond();
+        checkAccountExistence(simpleJdbcTemplate, savedAccount.getId(), true);
+        checkTransactionExistence(simpleJdbcTemplate, savedTransaction.getId(), true);
+
+        simpleAccountsDaoFactory.getAccountsDao().deleteAccount(savedAccount);
+
+        checkAccountExistence(simpleJdbcTemplate, savedAccount.getId(), false);
+        checkTransactionExistence(simpleJdbcTemplate, savedTransaction.getId(), false);
+    }
+
+    private void checkTransactionExistence(final SimpleJdbcTemplate simpleJdbcTemplate, final int id, final boolean exists) {
+        Assert.assertTrue(id != -1);
+        final int numTransactions = simpleJdbcTemplate.queryForInt(
+            "SELECT COUNT(*) FROM Transactions WHERE id = ?", new Object[]{id});
+        Assert.assertEquals(exists, numTransactions == 1);
+    }
+
+    private void checkAccountExistence(final SimpleJdbcTemplate simpleJdbcTemplate, final int id, final boolean exists) {
+        Assert.assertTrue(id != -1);
+        final int numAccounts = simpleJdbcTemplate.queryForInt(
+            "SELECT COUNT(*) FROM Accounts WHERE id = ?", new Object[]{id});
+        Assert.assertEquals(exists, numAccounts == 1);
+    }
+
+    /**
+     *
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void cannotDeleteAnUnsavedAccount() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        simpleAccountsDaoFactory.getAccountsDao().deleteAccount(createTestAccount());
     }
 }

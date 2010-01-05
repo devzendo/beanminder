@@ -32,6 +32,7 @@ public final class SimpleAccountsNewDatabaseCreationFacade
         "CREATE TABLE Transactions("
                 + "id INT IDENTITY,"
                 + "accountId INT NOT NULL,"
+                + "FOREIGN KEY (accountId) REFERENCES Accounts (id) ON DELETE CASCADE,"
                 + "index INT NOT NULL,"
                 + "amount INT NOT NULL,"
                 + "isCredit BOOLEAN,"

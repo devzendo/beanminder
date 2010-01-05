@@ -25,7 +25,7 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
      *
      */
     @Test(expected = DataIntegrityViolationException.class)
-    public void transactionsCannotBeAddedToANewAccount() {
+    public void transactionsCannotBeAddedToAnUnsavedAccount() {
         final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         simpleAccountsDaoFactory.getTransactionsDao().saveTransaction(createTestAccount(),
             new Transaction(200, true, false, todayNormalised()));
@@ -250,84 +250,159 @@ public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
         Assert.assertEquals(5600 + 200 - 30, allTransactions.get(1).getAccountBalance());
     }
 
-   /**
-    *
-    */
-   @Test
-   public void deleteATransactionAndSubsequentTransactionsAndAccountBalanceUpdated() {
+    /**
+     *
+     */
+    @Test
+    public void deleteATransactionAndSubsequentTransactionsAndAccountBalanceUpdated() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final Account newAccount = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+            newAccount);
+        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final Date todayNormalised = todayNormalised();
+        // Transaction 0
+        final Transaction newTransaction0 = new Transaction(200, true, false,
+                todayNormalised);
+        final Pair<Account, Transaction> savedTransaction0Pair =
+            transactionsDao.saveTransaction(savedAccount, newTransaction0);
+        final Transaction savedTransaction0 = savedTransaction0Pair.getSecond();
+
+        // Transaction 1
+        final Transaction newTransaction1 = new Transaction(20, true, false,
+            todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction1);
+
+        // Transaction 2
+        final Transaction newTransaction2 = new Transaction(10, false, false,
+            todayNormalised);
+        transactionsDao.saveTransaction(savedAccount, newTransaction2);
+
+        // Transaction 3
+        final Transaction newTransaction3 = new Transaction(500, true, false,
+            todayNormalised);
+        final Pair<Account, Transaction> saveTransaction3Pair = transactionsDao.saveTransaction(savedAccount, newTransaction3);
+        final Account accountBeforeDelete = saveTransaction3Pair.getFirst();
+        Assert.assertEquals(5600 + 200 + 20 - 10 + 500, accountBeforeDelete.getCurrentBalance());
+
+        // Delete Transaction 0
+        final Account updatedAccount = transactionsDao.deleteTransaction(accountBeforeDelete, savedTransaction0);
+
+        // Have the account, the updated transaction, and subsequent transactions been modified? The
+        // transactions' indices should have changed also.
+        Assert.assertEquals(5600 + 20 - 10 + 500, updatedAccount.getCurrentBalance());
+
+        final List<Transaction> allTransactions = transactionsDao.findAllTransactionsForAccount(savedAccount);
+        Assert.assertEquals(3, allTransactions.size());
+
+        Assert.assertEquals(20, allTransactions.get(0).getAmount());
+        Assert.assertEquals(0, allTransactions.get(0).getIndex());
+        Assert.assertEquals(5620, allTransactions.get(0).getAccountBalance());
+
+        Assert.assertEquals(10, allTransactions.get(1).getAmount());
+        Assert.assertEquals(1, allTransactions.get(1).getIndex());
+        Assert.assertEquals(5610, allTransactions.get(1).getAccountBalance());
+
+        Assert.assertEquals(500, allTransactions.get(2).getAmount());
+        Assert.assertEquals(2, allTransactions.get(2).getIndex());
+        Assert.assertEquals(6110, allTransactions.get(2).getAccountBalance());
+    }
+
+    /**
+     *
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void cannotDeleteATransactionGivenAnUnsavedAccount() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(createTestAccount(),
+            new Transaction(200, true, false, todayNormalised()));
+    }
+
+    /**
+     *
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void cannotDeleteAnUnsavedTransaction() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final Account newAccount = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+            newAccount);
+        simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(savedAccount,
+            new Transaction(200, true, false, todayNormalised()));
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void transactionsCanBeFoundByIndexRange() {
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final Account newAccount = createTestAccount();
+        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+            newAccount);
+        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final Date todayNormalised = todayNormalised();
+        transactionsDao.saveTransaction(savedAccount, new Transaction(200, true, false,
+                todayNormalised));
+
+        transactionsDao.saveTransaction(savedAccount, new Transaction(20, true, false,
+            todayNormalised));
+
+        transactionsDao.saveTransaction(savedAccount, new Transaction(10, false, false,
+            todayNormalised));
+
+        transactionsDao.saveTransaction(savedAccount, new Transaction(500, true, false,
+            todayNormalised));
+
+        final List<Transaction> midRangeIndices = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, 1, 2);
+        checkTransactionAmounts(midRangeIndices, 20, 10);
+
+        final List<Transaction> firstIndex = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, 0, 0);
+        checkTransactionAmounts(firstIndex, 200);
+
+        final List<Transaction> lastIndex = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, 3, 3);
+        checkTransactionAmounts(lastIndex, 500);
+
+        final List<Transaction> allIndices = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, 0, 3);
+        checkTransactionAmounts(allIndices, 200, 20, 10, 500);
+
+        final List<Transaction> allIndicesByOutOfRangeIndices = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, -3, 9);
+        checkTransactionAmounts(allIndicesByOutOfRangeIndices, 200, 20, 10, 500);
+
+        final List<Transaction> noIndicesByInvertedOrderIndices = transactionsDao.findAllTransactionsForAccountByIndexRange(savedAccount, 3, 0);
+        checkTransactionAmounts(noIndicesByInvertedOrderIndices);
+    }
+
+    private void checkTransactionAmounts(
+         final List<Transaction> transactionList,
+         final int ... amounts) {
+        Assert.assertEquals(amounts.length, transactionList.size());
+        for (int i = 0; i < amounts.length; i++) {
+            Assert.assertEquals(
+                "Transaction amount at index " + i + " is "
+                + transactionList.get(i).getAmount()
+                + " but should be " + amounts[i],
+                amounts[i], transactionList.get(i).getAmount());
+        }
+    }
+
+    /**
+     *
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void cannotFindTransactionsByIndexRangeForAnUnsavedAccount() {
        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
        final Account newAccount = createTestAccount();
-       final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
-           newAccount);
-       final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
-       final Date todayNormalised = todayNormalised();
-       // Transaction 0
-       final Transaction newTransaction0 = new Transaction(200, true, false,
-               todayNormalised);
-       final Pair<Account, Transaction> savedTransaction0Pair =
-           transactionsDao.saveTransaction(savedAccount, newTransaction0);
-       final Transaction savedTransaction0 = savedTransaction0Pair.getSecond();
+       simpleAccountsDaoFactory.getTransactionsDao().findAllTransactionsForAccountByIndexRange(newAccount, 0, 0);
+    }
 
-       // Transaction 1
-       final Transaction newTransaction1 = new Transaction(20, true, false,
-           todayNormalised);
-       transactionsDao.saveTransaction(savedAccount, newTransaction1);
-
-       // Transaction 2
-       final Transaction newTransaction2 = new Transaction(10, false, false,
-           todayNormalised);
-       transactionsDao.saveTransaction(savedAccount, newTransaction2);
-
-       // Transaction 3
-       final Transaction newTransaction3 = new Transaction(500, true, false,
-           todayNormalised);
-       final Pair<Account, Transaction> saveTransaction3Pair = transactionsDao.saveTransaction(savedAccount, newTransaction3);
-       final Account accountBeforeDelete = saveTransaction3Pair.getFirst();
-       Assert.assertEquals(5600 + 200 + 20 - 10 + 500, accountBeforeDelete.getCurrentBalance());
-
-       // Delete Transaction 0
-       final Account updatedAccount = transactionsDao.deleteTransaction(accountBeforeDelete, savedTransaction0);
-
-       // Have the account, the updated transaction, and subsequent transactions been modified? The
-       // transactions' indices should have changed also.
-       Assert.assertEquals(5600 + 20 - 10 + 500, updatedAccount.getCurrentBalance());
-
-       final List<Transaction> allTransactions = transactionsDao.findAllTransactionsForAccount(savedAccount);
-       Assert.assertEquals(3, allTransactions.size());
-
-       Assert.assertEquals(20, allTransactions.get(0).getAmount());
-       Assert.assertEquals(0, allTransactions.get(0).getIndex());
-       Assert.assertEquals(5620, allTransactions.get(0).getAccountBalance());
-
-       Assert.assertEquals(10, allTransactions.get(1).getAmount());
-       Assert.assertEquals(1, allTransactions.get(1).getIndex());
-       Assert.assertEquals(5610, allTransactions.get(1).getAccountBalance());
-
-       Assert.assertEquals(500, allTransactions.get(2).getAmount());
-       Assert.assertEquals(2, allTransactions.get(2).getIndex());
-       Assert.assertEquals(6110, allTransactions.get(2).getAccountBalance());
-   }
-
-   /**
-    *
-    */
-   @Test(expected = DataIntegrityViolationException.class)
-   public void cannotDeleteATransactionGivenAnUnsavedAccount() {
-       final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-       simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(createTestAccount(),
-           new Transaction(200, true, false, todayNormalised()));
-   }
-
-   /**
-    *
-    */
-   @Test(expected = DataIntegrityViolationException.class)
-   public void cannotDeleteAnUnsavedTransaction() {
+    /**
+     *
+     */
+    @Test(expected = DataIntegrityViolationException.class)
+    public void cannotFindAllTransactionsForAnUnsavedAccount() {
        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
        final Account newAccount = createTestAccount();
-       final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
-           newAccount);
-       simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(savedAccount,
-           new Transaction(200, true, false, todayNormalised()));
+       simpleAccountsDaoFactory.getTransactionsDao().findAllTransactionsForAccount(newAccount);
    }
 }

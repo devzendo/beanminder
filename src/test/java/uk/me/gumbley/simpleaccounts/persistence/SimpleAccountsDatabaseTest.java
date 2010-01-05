@@ -16,7 +16,7 @@ import uk.me.gumbley.simpleaccounts.persistence.domain.Account;
 
 /**
  * Base class for simple database tests.
- * 
+ *
  * @author matt
  *
  */
@@ -29,7 +29,7 @@ public abstract class SimpleAccountsDatabaseTest {
      * The test database password
      */
     protected static final String DBPASSWORD = "";
-    
+
     private PersistencePluginHelper mPersistencePluginHelper;
 
     /**
@@ -40,7 +40,7 @@ public abstract class SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     public SimpleAccountsDatabaseTest() {
         super();
@@ -60,18 +60,18 @@ public abstract class SimpleAccountsDatabaseTest {
     }
 
     /**
-     * 
+     *
      */
     @After
     public final void tidyDatabases() {
         mPersistencePluginHelper.tidyTestDatabasesDirectory();
     }
-    
-    
+
+
     /**
      * Create the test database, returning the DAO Factory
      * @return the SimpleAccountsDAOFactory.
-     * 
+     *
      */
     protected final SimpleAccountsDAOFactory createTestDatabase() {
         final InstanceSet<DAOFactory> database =
@@ -81,7 +81,17 @@ public abstract class SimpleAccountsDatabaseTest {
             database.getInstanceOf(SimpleAccountsDAOFactory.class);
         return simpleAccountsDaoFactory;
     }
-    
+
+    /**
+     * Create the test database, returning the set of DAO Factories
+     * @return the SimpleAccountsDAOFactory.
+     *
+     */
+    protected final InstanceSet<DAOFactory> createTestDatabaseReturningAllDAOFactories() {
+        return getPersistencePluginHelper().createDatabase(
+                DBNAME, DBPASSWORD);
+    }
+
     /**
      * Create a test account, but don't save it.
      * @return the test account

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -37,7 +38,12 @@ public final class JdbcTemplateAccountsDao implements AccountsDao {
      * {@inheritDoc}
      */
     public void deleteAccount(final Account account) {
-        // TODO Auto-generated method stub
+        if (account.getId() == -1) {
+            throw new DataIntegrityViolationException(
+                "Cannot delete an unsaved account");
+        }
+        final String sql = "DELETE FROM Accounts WHERE id = ?";
+        mJdbcTemplate.update(sql, new Object[] {account.getId()});
     }
 
     /**

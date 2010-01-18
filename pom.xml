@@ -4,7 +4,13 @@
 	<groupId>uk.me.gumbley</groupId>
 	<artifactId>SimpleAccounts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	
+    <parent>
+  	    <groupId>uk.me.gumbley</groupId>
+        <artifactId>GroupParent</artifactId>
+	    <version>1.0.0</version>
+    </parent>
+    
 	<dependencies>
 		<dependency>
 			<groupId>uk.me.gumbley</groupId>

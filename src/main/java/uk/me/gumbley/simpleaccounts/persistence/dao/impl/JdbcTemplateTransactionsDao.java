@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.devzendo.minimiser.util.Pair;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -14,7 +15,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Account;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;

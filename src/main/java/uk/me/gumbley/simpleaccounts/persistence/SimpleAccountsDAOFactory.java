@@ -1,6 +1,7 @@
 package uk.me.gumbley.simpleaccounts.persistence;
 
-import uk.me.gumbley.minimiser.persistence.DAOFactory;
+import org.devzendo.minimiser.persistence.DAOFactory;
+
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
 

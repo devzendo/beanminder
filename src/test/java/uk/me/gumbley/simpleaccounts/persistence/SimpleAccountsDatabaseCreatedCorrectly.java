@@ -1,12 +1,12 @@
 package uk.me.gumbley.simpleaccounts.persistence;
 
+import org.devzendo.minimiser.persistence.DAOFactory;
+import org.devzendo.minimiser.persistence.MiniMiserDAOFactory;
+import org.devzendo.minimiser.util.InstanceSet;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import uk.me.gumbley.minimiser.persistence.DAOFactory;
-import uk.me.gumbley.minimiser.persistence.MiniMiserDAOFactory;
-import uk.me.gumbley.minimiser.util.InstanceSet;
 
 
 /**

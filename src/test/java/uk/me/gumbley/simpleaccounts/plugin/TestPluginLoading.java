@@ -1,11 +1,11 @@
 package uk.me.gumbley.simpleaccounts.plugin;
 
+import org.devzendo.minimiser.pluginmanager.PluginException;
+import org.devzendo.minimiser.pluginmanager.PluginHelper;
+import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import uk.me.gumbley.minimiser.pluginmanager.PluginException;
-import uk.me.gumbley.minimiser.pluginmanager.PluginHelper;
-import uk.me.gumbley.minimiser.pluginmanager.PluginHelperFactory;
 
 /**
  * Tests that this project's plugin is loaded.

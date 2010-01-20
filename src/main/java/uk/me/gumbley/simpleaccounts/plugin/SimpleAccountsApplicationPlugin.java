@@ -3,12 +3,13 @@ package uk.me.gumbley.simpleaccounts.plugin;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.me.gumbley.minimiser.plugin.AbstractPlugin;
-import uk.me.gumbley.minimiser.plugin.ApplicationPlugin;
-import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreation;
-import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
-import uk.me.gumbley.minimiser.plugin.facade.opendatabase.DatabaseOpening;
-import uk.me.gumbley.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
+import org.devzendo.minimiser.plugin.AbstractPlugin;
+import org.devzendo.minimiser.plugin.ApplicationPlugin;
+import org.devzendo.minimiser.plugin.facade.newdatabase.NewDatabaseCreation;
+import org.devzendo.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
+import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpening;
+import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
+
 
 /**
  * The SimpleAccounts application plugin

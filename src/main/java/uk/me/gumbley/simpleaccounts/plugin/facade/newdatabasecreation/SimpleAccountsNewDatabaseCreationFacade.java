@@ -4,12 +4,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.devzendo.minimiser.persistence.PersistenceObservableEvent;
+import org.devzendo.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import uk.me.gumbley.commoncode.patterns.observer.Observer;
-import uk.me.gumbley.minimiser.persistence.PersistenceObservableEvent;
-import uk.me.gumbley.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
 
 /**
  * Create the SimpleAccounts database.

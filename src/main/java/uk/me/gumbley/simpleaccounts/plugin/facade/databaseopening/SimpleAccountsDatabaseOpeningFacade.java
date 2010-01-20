@@ -1,11 +1,11 @@
 package uk.me.gumbley.simpleaccounts.plugin.facade.databaseopening;
 
+import org.devzendo.minimiser.persistence.DAOFactory;
+import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
+import org.devzendo.minimiser.util.InstancePair;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-import uk.me.gumbley.minimiser.persistence.DAOFactory;
-import uk.me.gumbley.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
-import uk.me.gumbley.minimiser.util.InstancePair;
 import uk.me.gumbley.simpleaccounts.persistence.SimpleAccountsDAOFactory;
 import uk.me.gumbley.simpleaccounts.persistence.impl.JdbcTemplateSimpleAccountsDAOFactory;
 

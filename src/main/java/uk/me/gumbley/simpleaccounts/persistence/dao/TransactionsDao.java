@@ -2,7 +2,8 @@ package uk.me.gumbley.simpleaccounts.persistence.dao;
 
 import java.util.List;
 
-import uk.me.gumbley.minimiser.util.Pair;
+import org.devzendo.minimiser.util.Pair;
+
 import uk.me.gumbley.simpleaccounts.persistence.domain.Account;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;
 

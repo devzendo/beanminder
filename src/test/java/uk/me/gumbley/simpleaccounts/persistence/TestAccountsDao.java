@@ -3,16 +3,16 @@ package uk.me.gumbley.simpleaccounts.persistence;
 import java.sql.Date;
 import java.util.List;
 
+import org.devzendo.minimiser.persistence.DAOFactory;
+import org.devzendo.minimiser.persistence.MiniMiserDAOFactory;
+import org.devzendo.minimiser.util.InstanceSet;
+import org.devzendo.minimiser.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import uk.me.gumbley.minimiser.persistence.DAOFactory;
-import uk.me.gumbley.minimiser.persistence.MiniMiserDAOFactory;
-import uk.me.gumbley.minimiser.util.InstanceSet;
-import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.AccountsDao;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Account;

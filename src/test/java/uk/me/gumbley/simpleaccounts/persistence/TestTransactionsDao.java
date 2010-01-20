@@ -5,10 +5,10 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.devzendo.minimiser.util.Pair;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import uk.me.gumbley.minimiser.util.Pair;
 import uk.me.gumbley.simpleaccounts.persistence.dao.TransactionsDao;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Account;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Transaction;

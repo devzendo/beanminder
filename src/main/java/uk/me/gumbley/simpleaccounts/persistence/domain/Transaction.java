@@ -4,8 +4,8 @@ import java.sql.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.devzendo.commoncode.datetime.SQLDateUtils;
 
-import uk.me.gumbley.commoncode.datetime.SQLDateUtils;
 
 /**
  * A Transaction POJO.

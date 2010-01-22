@@ -2,6 +2,7 @@ package uk.me.gumbley.simpleaccounts.persistence;
 
 import java.sql.Date;
 
+import org.devzendo.commoncode.datetime.SQLDateUtils;
 import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.persistence.PersistencePluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginException;
@@ -11,7 +12,6 @@ import org.devzendo.minimiser.util.InstanceSet;
 import org.junit.After;
 import org.junit.Before;
 
-import uk.me.gumbley.commoncode.datetime.SQLDateUtils;
 import uk.me.gumbley.simpleaccounts.persistence.domain.Account;
 
 /**

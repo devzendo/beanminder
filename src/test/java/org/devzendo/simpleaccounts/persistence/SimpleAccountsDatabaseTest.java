@@ -1,0 +1,137 @@
+package org.devzendo.simpleaccounts.persistence;
+
+import java.sql.Date;
+
+import org.devzendo.commoncode.datetime.SQLDateUtils;
+import org.devzendo.minimiser.persistence.DAOFactory;
+import org.devzendo.minimiser.persistence.PersistencePluginHelper;
+import org.devzendo.minimiser.pluginmanager.PluginException;
+import org.devzendo.minimiser.pluginmanager.PluginHelper;
+import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
+import org.devzendo.minimiser.util.InstanceSet;
+import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.simpleaccounts.persistence.domain.Account;
+import org.junit.After;
+import org.junit.Before;
+
+
+/**
+ * Base class for simple database tests.
+ *
+ * @author matt
+ *
+ */
+public abstract class SimpleAccountsDatabaseTest {
+    /**
+     * The test database name
+     */
+    protected static final String DBNAME = "sadatabase";
+    /**
+     * The test database password
+     */
+    protected static final String DBPASSWORD = "";
+
+    private PersistencePluginHelper mPersistencePluginHelper;
+
+    /**
+     * @return the persistencePluginHelper
+     */
+    public final PersistencePluginHelper getPersistencePluginHelper() {
+        return mPersistencePluginHelper;
+    }
+
+    /**
+     *
+     */
+    public SimpleAccountsDatabaseTest() {
+        super();
+    }
+
+    /**
+     * @throws PluginException on failure
+     */
+    @Before
+    public final void getPrerequisites() throws PluginException {
+        final PluginHelper pluginHelper =
+            PluginHelperFactory.createMiniMiserPluginHelper();
+        mPersistencePluginHelper =
+            new PersistencePluginHelper(false, pluginHelper);
+        mPersistencePluginHelper.validateTestDatabaseDirectory();
+        pluginHelper.loadStandardPlugins();
+    }
+
+    /**
+     *
+     */
+    @After
+    public final void tidyDatabases() {
+        mPersistencePluginHelper.tidyTestDatabasesDirectory();
+    }
+
+
+    /**
+     * Create the test database, returning the DAO Factory
+     * @return the SimpleAccountsDAOFactory.
+     *
+     */
+    protected final SimpleAccountsDAOFactory createTestDatabase() {
+        final InstanceSet<DAOFactory> database =
+            getPersistencePluginHelper().createDatabase(
+                DBNAME, DBPASSWORD);
+        final SimpleAccountsDAOFactory simpleAccountsDaoFactory =
+            database.getInstanceOf(SimpleAccountsDAOFactory.class);
+        return simpleAccountsDaoFactory;
+    }
+
+    /**
+     * Create the test database, returning the set of DAO Factories
+     * @return the SimpleAccountsDAOFactory.
+     *
+     */
+    protected final InstanceSet<DAOFactory> createTestDatabaseReturningAllDAOFactories() {
+        return getPersistencePluginHelper().createDatabase(
+                DBNAME, DBPASSWORD);
+    }
+
+    /**
+     * Create a test account, but don't save it.
+     * @return the test account
+     */
+    protected final Account createTestAccount() {
+        final Account newAccount =
+            new Account("Test account", "123456",
+                "Imaginary Bank of London", 5600);
+        return newAccount;
+    }
+
+    /**
+     * Create a second test account, but don't save it.
+     * @return the second test account.
+     */
+    protected final Account createSecondTestAccount() {
+        final Account newAccount =
+            new Account("Aardvark Test account", "867456",
+                "Imaginary Bank of London", 50);
+        return newAccount;
+    }
+
+    /**
+     * Save a test account.
+     * @param simpleAccountsDaoFactory the DAO Factory
+     * @param account the account to save
+     * @return the saved account
+     */
+    protected final Account saveTestAccount(
+            final SimpleAccountsDAOFactory simpleAccountsDaoFactory, final Account account) {
+        final Account savedAccount =
+            simpleAccountsDaoFactory.getAccountsDao().saveAccount(account);
+        return savedAccount;
+    }
+
+    /**
+     * @return today, normalised as an SQL date
+     */
+    protected final Date todayNormalised() {
+        return SQLDateUtils.normalise(new Date(System.currentTimeMillis()));
+    }
+}

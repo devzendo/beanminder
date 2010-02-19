@@ -6,7 +6,6 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.devzendo.minimiser.util.Pair;
-import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
 import org.devzendo.simpleaccounts.persistence.dao.TransactionsDao;
 import org.devzendo.simpleaccounts.persistence.domain.Account;
 import org.devzendo.simpleaccounts.persistence.domain.Transaction;

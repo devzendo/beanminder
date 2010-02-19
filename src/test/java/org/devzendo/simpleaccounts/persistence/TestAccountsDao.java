@@ -7,7 +7,6 @@ import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.persistence.MiniMiserDAOFactory;
 import org.devzendo.minimiser.util.InstanceSet;
 import org.devzendo.minimiser.util.Pair;
-import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
 import org.devzendo.simpleaccounts.persistence.dao.AccountsDao;
 import org.devzendo.simpleaccounts.persistence.dao.TransactionsDao;
 import org.devzendo.simpleaccounts.persistence.domain.Account;

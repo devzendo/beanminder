@@ -9,7 +9,6 @@ import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
 import org.devzendo.minimiser.util.InstanceSet;
-import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
 import org.devzendo.simpleaccounts.persistence.domain.Account;
 import org.junit.After;
 import org.junit.Before;

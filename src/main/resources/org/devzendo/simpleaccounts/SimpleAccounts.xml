@@ -11,4 +11,7 @@
 	<bean id="databaseOpeningFacade" 
 		class="org.devzendo.simpleaccounts.plugin.facade.databaseopening.SimpleAccountsDatabaseOpeningFacade" />
 
+	<bean id="menuProvidingFacade" 
+		class="org.devzendo.simpleaccounts.plugin.facade.providemenu.SimpleAccountsMenuProvidingFacade" />
+
 </beans>

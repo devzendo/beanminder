@@ -9,6 +9,8 @@ import org.devzendo.minimiser.plugin.facade.newdatabase.NewDatabaseCreation;
 import org.devzendo.minimiser.plugin.facade.newdatabase.NewDatabaseCreationFacade;
 import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpening;
 import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
+import org.devzendo.minimiser.plugin.facade.providemenu.MenuProviding;
+import org.devzendo.minimiser.plugin.facade.providemenu.MenuProvidingFacade;
 
 
 /**
@@ -18,10 +20,10 @@ import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
  */
 public class SimpleAccountsApplicationPlugin extends AbstractPlugin
     implements ApplicationPlugin, NewDatabaseCreation,
-    DatabaseOpening {
+    DatabaseOpening, MenuProviding {
 
     /**
-     * 
+     *
      */
     public SimpleAccountsApplicationPlugin() {
     }
@@ -61,6 +63,14 @@ public class SimpleAccountsApplicationPlugin extends AbstractPlugin
     public DatabaseOpeningFacade getDatabaseOpeningFacade() {
         return getSpringLoader().getBean("databaseOpeningFacade",
             DatabaseOpeningFacade.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public MenuProvidingFacade getMenuProvidingFacade() {
+        return getSpringLoader().getBean("menuProvidingFacade",
+            MenuProvidingFacade.class);
     }
 
     /**

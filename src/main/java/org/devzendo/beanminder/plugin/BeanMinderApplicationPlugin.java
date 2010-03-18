@@ -34,14 +34,14 @@ import org.devzendo.minimiser.plugin.facade.providemenu.MenuProvidingFacade;
  * @author matt
  *
  */
-public class SimpleAccountsApplicationPlugin extends AbstractPlugin
+public class BeanMinderApplicationPlugin extends AbstractPlugin
     implements ApplicationPlugin, NewDatabaseCreation,
     DatabaseOpening, MenuProviding {
 
     /**
      *
      */
-    public SimpleAccountsApplicationPlugin() {
+    public BeanMinderApplicationPlugin() {
     }
 
     /**

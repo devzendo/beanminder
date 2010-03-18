@@ -16,7 +16,7 @@
 
 package org.devzendo.beanminder.plugin.facade.providemenu;
 
-import org.devzendo.beanminder.plugin.SimpleAccountsApplicationPlugin;
+import org.devzendo.beanminder.plugin.BeanMinderApplicationPlugin;
 import org.devzendo.minimiser.openlist.OpenDatabaseList;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
@@ -44,7 +44,7 @@ public final class TestViewMenu {
         pluginHelper.loadStandardPlugins();
         Assert.assertTrue(
             "Our plugin is not loaded",
-            pluginHelper.getApplicationPlugin() instanceof SimpleAccountsApplicationPlugin);
+            pluginHelper.getApplicationPlugin() instanceof BeanMinderApplicationPlugin);
 //        new MenuProvidingFacadeInitialiser(pluginHelper.getPluginManager(), openDatabaseList,
 //            menu, globalApplicationMenu, problemReporter)
     }

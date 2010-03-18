@@ -4,8 +4,9 @@
 	<groupId>org.devzendo</groupId>
 	<artifactId>SimpleAccounts</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>SimpleAccounts</name>
-	<description>The sample application for the MiniMiser Framework User Guide
+	<name>BeanMinder</name>
+	<description>A simple home financial management application.
+	The sample application for the MiniMiser Framework User Guide
     (Apache License v2) 2008-2010 Matt Gumbley, DevZendo.org</description>
 	
     <parent>

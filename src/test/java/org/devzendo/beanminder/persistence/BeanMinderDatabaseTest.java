@@ -37,7 +37,7 @@ import org.junit.Before;
  * @author matt
  *
  */
-public abstract class SimpleAccountsDatabaseTest {
+public abstract class BeanMinderDatabaseTest {
     /**
      * The test database name
      */
@@ -59,7 +59,7 @@ public abstract class SimpleAccountsDatabaseTest {
     /**
      *
      */
-    public SimpleAccountsDatabaseTest() {
+    public BeanMinderDatabaseTest() {
         super();
     }
 

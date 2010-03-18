@@ -36,7 +36,7 @@ import org.springframework.dao.DataIntegrityViolationException;
  * @author matt
  *
  */
-public final class TestTransactionsDao extends SimpleAccountsDatabaseTest {
+public final class TestTransactionsDao extends BeanMinderDatabaseTest {
 
     /**
      *

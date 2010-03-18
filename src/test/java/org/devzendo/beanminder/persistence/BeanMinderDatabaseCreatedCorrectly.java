@@ -30,7 +30,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * @author matt
  *
  */
-public final class SimpleAccountsDatabaseCreatedCorrectly extends SimpleAccountsDatabaseTest {
+public final class BeanMinderDatabaseCreatedCorrectly extends BeanMinderDatabaseTest {
     /**
      *
      */

@@ -6,12 +6,12 @@
     default-lazy-init="true" >
 
 	<bean id="newDatabaseCreationFacade" 
-		class="org.devzendo.beanminder.plugin.facade.newdatabasecreation.SimpleAccountsNewDatabaseCreationFacade" />
+		class="org.devzendo.beanminder.plugin.facade.newdatabasecreation.BeanMinderNewDatabaseCreationFacade" />
 
 	<bean id="databaseOpeningFacade" 
-		class="org.devzendo.beanminder.plugin.facade.databaseopening.SimpleAccountsDatabaseOpeningFacade" />
+		class="org.devzendo.beanminder.plugin.facade.databaseopening.BeanMinderDatabaseOpeningFacade" />
 
 	<bean id="menuProvidingFacade" 
-		class="org.devzendo.beanminder.plugin.facade.providemenu.SimpleAccountsMenuProvidingFacade" />
+		class="org.devzendo.beanminder.plugin.facade.providemenu.BeanMinderMenuProvidingFacade" />
 
 </beans>

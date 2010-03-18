@@ -27,7 +27,7 @@ import org.devzendo.minimiser.openlist.OpenDatabaseList;
 import org.devzendo.minimiser.openlist.DatabaseDescriptor.AttributeIdentifier;
 import org.devzendo.minimiser.plugin.facade.providemenu.MenuProvidingFacade;
 
-public class SimpleAccountsMenuProvidingFacade implements MenuProvidingFacade {
+public class BeanMinderMenuProvidingFacade implements MenuProvidingFacade {
     public void initialise(
             final ApplicationMenu globalApplicationMenu,
             final OpenDatabaseList openDatabaseList,

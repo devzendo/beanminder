@@ -31,7 +31,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
  * @author matt
  *
  */
-public final class SimpleAccountsDatabaseOpeningFacade implements
+public final class BeanMinderDatabaseOpeningFacade implements
         DatabaseOpeningFacade {
     /**
      * {@inheritDoc}

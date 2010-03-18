@@ -33,7 +33,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
  * @author matt
  *
  */
-public final class SimpleAccountsNewDatabaseCreationFacade
+public final class BeanMinderNewDatabaseCreationFacade
     implements NewDatabaseCreationFacade {
     private static final String[] CREATION_DDL_STRINGS =
         new String[] {

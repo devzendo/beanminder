@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence.impl;
+package org.devzendo.beanminder.persistence.impl;
 
-import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
-import org.devzendo.simpleaccounts.persistence.dao.AccountsDao;
-import org.devzendo.simpleaccounts.persistence.dao.TransactionsDao;
-import org.devzendo.simpleaccounts.persistence.dao.impl.JdbcTemplateAccountsDao;
-import org.devzendo.simpleaccounts.persistence.dao.impl.JdbcTemplateTransactionsDao;
+import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.dao.AccountsDao;
+import org.devzendo.beanminder.persistence.dao.TransactionsDao;
+import org.devzendo.beanminder.persistence.dao.impl.JdbcTemplateAccountsDao;
+import org.devzendo.beanminder.persistence.dao.impl.JdbcTemplateTransactionsDao;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.plugin;
+package org.devzendo.beanminder.plugin;
 
 import java.util.Arrays;
 import java.util.List;

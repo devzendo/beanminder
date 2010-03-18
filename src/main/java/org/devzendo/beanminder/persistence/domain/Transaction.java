@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence.domain;
+package org.devzendo.beanminder.persistence.domain;
 
 import java.sql.Date;
 

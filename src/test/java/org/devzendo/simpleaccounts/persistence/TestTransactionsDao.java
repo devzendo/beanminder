@@ -21,10 +21,11 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.dao.TransactionsDao;
+import org.devzendo.beanminder.persistence.domain.Account;
+import org.devzendo.beanminder.persistence.domain.Transaction;
 import org.devzendo.minimiser.util.Pair;
-import org.devzendo.simpleaccounts.persistence.dao.TransactionsDao;
-import org.devzendo.simpleaccounts.persistence.domain.Account;
-import org.devzendo.simpleaccounts.persistence.domain.Transaction;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 

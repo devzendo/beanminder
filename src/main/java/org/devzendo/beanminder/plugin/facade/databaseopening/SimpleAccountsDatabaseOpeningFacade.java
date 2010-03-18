@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.plugin.facade.databaseopening;
+package org.devzendo.beanminder.plugin.facade.databaseopening;
 
+import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.impl.JdbcTemplateSimpleAccountsDAOFactory;
 import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
 import org.devzendo.minimiser.util.InstancePair;
-import org.devzendo.simpleaccounts.persistence.SimpleAccountsDAOFactory;
-import org.devzendo.simpleaccounts.persistence.impl.JdbcTemplateSimpleAccountsDAOFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 

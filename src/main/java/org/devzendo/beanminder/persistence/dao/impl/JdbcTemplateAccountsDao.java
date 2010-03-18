@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence.dao.impl;
+package org.devzendo.beanminder.persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.devzendo.simpleaccounts.persistence.dao.AccountsDao;
-import org.devzendo.simpleaccounts.persistence.domain.Account;
+import org.devzendo.beanminder.persistence.dao.AccountsDao;
+import org.devzendo.beanminder.persistence.domain.Account;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;

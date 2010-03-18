@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.plugin.facade.newdatabasecreation;
+package org.devzendo.beanminder.plugin.facade.newdatabasecreation;
 
 import java.util.Map;
 

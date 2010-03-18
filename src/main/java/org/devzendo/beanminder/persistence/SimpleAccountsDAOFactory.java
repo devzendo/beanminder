@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence;
+package org.devzendo.beanminder.persistence;
 
+import org.devzendo.beanminder.persistence.dao.AccountsDao;
+import org.devzendo.beanminder.persistence.dao.TransactionsDao;
 import org.devzendo.minimiser.persistence.DAOFactory;
-import org.devzendo.simpleaccounts.persistence.dao.AccountsDao;
-import org.devzendo.simpleaccounts.persistence.dao.TransactionsDao;
 
 
 /**

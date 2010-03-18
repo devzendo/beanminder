@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.plugin.facade.providemenu;
+package org.devzendo.beanminder.plugin.facade.providemenu;
 
 import org.devzendo.commoncode.patterns.observer.Observer;
 import org.devzendo.minimiser.gui.menu.ApplicationMenu;

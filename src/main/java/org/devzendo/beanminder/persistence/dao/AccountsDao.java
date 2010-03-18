@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence.dao;
+package org.devzendo.beanminder.persistence.dao;
 
 import java.util.List;
 
-import org.devzendo.simpleaccounts.persistence.domain.Account;
+import org.devzendo.beanminder.persistence.domain.Account;
 
 
 /**

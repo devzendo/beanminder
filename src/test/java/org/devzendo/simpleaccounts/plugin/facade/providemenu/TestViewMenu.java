@@ -16,11 +16,11 @@
 
 package org.devzendo.simpleaccounts.plugin.facade.providemenu;
 
+import org.devzendo.beanminder.plugin.SimpleAccountsApplicationPlugin;
 import org.devzendo.minimiser.openlist.OpenDatabaseList;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
-import org.devzendo.simpleaccounts.plugin.SimpleAccountsApplicationPlugin;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

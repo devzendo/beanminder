@@ -16,6 +16,7 @@
 
 package org.devzendo.simpleaccounts.plugin;
 
+import org.devzendo.beanminder.plugin.SimpleAccountsApplicationPlugin;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;

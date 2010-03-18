@@ -30,7 +30,7 @@ import org.devzendo.minimiser.plugin.facade.providemenu.MenuProvidingFacade;
 
 
 /**
- * The SimpleAccounts application plugin
+ * The BeanMinder application plugin
  * @author matt
  *
  */
@@ -48,7 +48,7 @@ public class BeanMinderApplicationPlugin extends AbstractPlugin
      * {@inheritDoc}
      */
     public String getName() {
-        return "SimpleAccounts";
+        return "BeanMinder";
     }
 
     /**
@@ -150,7 +150,7 @@ public class BeanMinderApplicationPlugin extends AbstractPlugin
      */
     public List<String> getApplicationContextResourcePaths() {
         return Arrays.asList(new String[] {
-                "org/devzendo/simpleaccounts/SimpleAccounts.xml"
+                "org/devzendo/beanminder/BeanMinder.xml"
         });
     }
 

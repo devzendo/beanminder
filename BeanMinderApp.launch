@@ -2,14 +2,14 @@
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <stringAttribute key="bad_container_name" value="/SimpleAccounts/S"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/MiniMiser/src/main/java/org/devzendo/minimiser/MiniMiser.java"/>
+<listEntry value="/BeanMinder"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
+<listEntry value="4"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.devzendo.minimiser.MiniMiser"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-classes -threads -times -level"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SimpleAccounts"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="BeanMinder"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

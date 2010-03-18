@@ -14,35 +14,46 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.plugin;
+package org.devzendo.beanminder.plugin.facade.providemenu;
 
 import org.devzendo.beanminder.plugin.SimpleAccountsApplicationPlugin;
+import org.devzendo.minimiser.openlist.OpenDatabaseList;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 
 /**
- * Tests that this project's plugin is loaded.
- *
+ * Test that the view menu is correctly initialiased, after a database is opened.
+ * It should contain TabIdentifiers for all Accounts.
  * @author matt
  *
  */
-public final class TestPluginLoading {
+public final class TestViewMenu {
     /**
-     * Load standard plugins, test ours is the application.
-     *
      * @throws PluginException
-     *         on failure
+     *
      */
-    @Test
-    public void ourPluginIsLoaded() throws PluginException {
+    @Before
+    public void getPrerequisites() throws PluginException {
+        final OpenDatabaseList openDatabaseList = new OpenDatabaseList();
         final PluginHelper pluginHelper = PluginHelperFactory.createMiniMiserPluginHelper();
         pluginHelper.loadStandardPlugins();
         Assert.assertTrue(
             "Our plugin is not loaded",
             pluginHelper.getApplicationPlugin() instanceof SimpleAccountsApplicationPlugin);
+//        new MenuProvidingFacadeInitialiser(pluginHelper.getPluginManager(), openDatabaseList,
+//            menu, globalApplicationMenu, problemReporter)
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void accountsAreListedInViewMenu() {
+        Assert.fail("oh boy, this is going to be one scary integration test");
     }
 }

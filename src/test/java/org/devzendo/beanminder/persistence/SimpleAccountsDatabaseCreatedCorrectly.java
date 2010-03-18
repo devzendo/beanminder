@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.simpleaccounts.persistence;
+package org.devzendo.beanminder.persistence;
 
 import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.persistence.MiniMiserDAOFactory;

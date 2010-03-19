@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.devzendo</groupId>
 	<artifactId>BeanMinder</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>BeanMinder</name>
 	<description>A simple home financial management application.
 	The sample application for the MiniMiser Framework User Guide
@@ -19,13 +19,13 @@
 		<dependency>
 			<groupId>org.devzendo</groupId>
 			<artifactId>MiniMiser</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.1.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.devzendo</groupId>
 			<artifactId>MiniMiser</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.1.0</version>
 			<classifier>tests</classifier>
 			<scope>test</scope>	
 		</dependency>

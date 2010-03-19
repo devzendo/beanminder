@@ -22,7 +22,7 @@ import org.devzendo.minimiser.persistence.DAOFactory;
 
 
 /**
- * The DAO Factory for accessing the SimpleAccounts database.
+ * The DAO Factory for accessing the BeanMinder database.
  * @author matt
  *
  */

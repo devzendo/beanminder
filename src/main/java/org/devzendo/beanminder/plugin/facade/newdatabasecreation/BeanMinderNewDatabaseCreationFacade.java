@@ -28,7 +28,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 
 /**
- * Create the SimpleAccounts database.
+ * Create the BeanMinder database.
  *
  * @author matt
  *
@@ -68,7 +68,7 @@ public final class BeanMinderNewDatabaseCreationFacade
             final Map<String, Object> pluginProperties) {
         for (int i = 0; i < CREATION_DDL_STRINGS.length; i++) {
             observer.eventOccurred(new PersistenceObservableEvent(
-                "Creating SimpleAccounts database..."));
+                "Creating BeanMinder database..."));
             jdbcTemplate.getJdbcOperations().
                 execute(CREATION_DDL_STRINGS[i]);
         }

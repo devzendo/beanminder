@@ -26,7 +26,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 
 /**
- * Open the SimpleAccounts database.
+ * Open the BeanMinder database.
  *
  * @author matt
  *

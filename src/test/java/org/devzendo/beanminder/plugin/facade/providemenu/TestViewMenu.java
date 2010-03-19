@@ -23,6 +23,7 @@ import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -53,6 +54,7 @@ public final class TestViewMenu {
      *
      */
     @Test
+    @Ignore
     public void accountsAreListedInViewMenu() {
         Assert.fail("oh boy, this is going to be one scary integration test");
     }

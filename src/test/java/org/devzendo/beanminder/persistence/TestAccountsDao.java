@@ -48,8 +48,8 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void createEmptyAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-        final AccountsDao accountsDao = simpleAccountsDaoFactory.getAccountsDao();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
+        final AccountsDao accountsDao = beanMinderDaoFactory.getAccountsDao();
         final Account newAccount = createTestAccount();
         final Account savedAccount =
             accountsDao.saveAccount(newAccount);
@@ -65,7 +65,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
         Assert.assertEquals(savedAccount.getInitialBalance(), savedAccount.getCurrentBalance());
 
         final TransactionsDao transactionsDao =
-            simpleAccountsDaoFactory.getTransactionsDao();
+            beanMinderDaoFactory.getTransactionsDao();
 
         Assert.assertEquals(0,
             transactionsDao.
@@ -78,9 +78,9 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void someAccountDetailsCanBeChanged() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final AccountsDao accountsDao =
-            simpleAccountsDaoFactory.getAccountsDao();
+            beanMinderDaoFactory.getAccountsDao();
 
         final Account newAccount = createTestAccount();
         Account savedAccount =
@@ -109,10 +109,10 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataAccessException.class)
     public void cannotCommitTransactionAgainstUnsavedAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         // note: unsaved Account
-        simpleAccountsDaoFactory.
+        beanMinderDaoFactory.
             getTransactionsDao().
             findAllTransactionsForAccount(newAccount);
     }
@@ -122,12 +122,12 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithNegativeAmounts() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, newAccount);
 
         final Transaction newTransaction = new Transaction(-200, false, false, todayNormalised());
-        simpleAccountsDaoFactory.getTransactionsDao().
+        beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
     }
 
@@ -136,12 +136,12 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithZeroAmounts() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, newAccount);
 
         final Transaction newTransaction = new Transaction(0, false, false, todayNormalised());
-        simpleAccountsDaoFactory.getTransactionsDao().
+        beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
     }
 
@@ -150,13 +150,13 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void transactionCanBeAddedToAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, newAccount);
 
         final Date todayNormalised = todayNormalised();
         final Transaction newTransaction = new Transaction(200, true, false, todayNormalised);
-        final Pair<Account, Transaction> pair = simpleAccountsDaoFactory.getTransactionsDao().
+        final Pair<Account, Transaction> pair = beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
         final Account updatedAccount = pair.getFirst();
 
@@ -168,7 +168,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
         Assert.assertFalse(savedTransaction.isReconciled());
         Assert.assertEquals(todayNormalised, savedTransaction.getTransactionDate());
 
-        final List<Transaction> transactions = simpleAccountsDaoFactory.getTransactionsDao().findAllTransactionsForAccount(updatedAccount);
+        final List<Transaction> transactions = beanMinderDaoFactory.getTransactionsDao().findAllTransactionsForAccount(updatedAccount);
         Assert.assertEquals(1, transactions.size());
         System.out.println("saved transaction is " + savedTransaction.hashCode());
         System.out.println("returned transaction is " + transactions.get(0).hashCode());
@@ -180,12 +180,12 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void addCreditTransactionToAccountIncreasesBalance() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, newAccount);
 
         final Transaction newTransaction = new Transaction(200, true, false, todayNormalised());
-        final Pair<Account, Transaction> pair = simpleAccountsDaoFactory.getTransactionsDao().
+        final Pair<Account, Transaction> pair = beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
         Assert.assertEquals(5800, pair.getFirst().getCurrentBalance());
         // initial balance should not change
@@ -197,12 +197,12 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void addDebitTransactionToAccountDecreasesBalance() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, newAccount);
 
         final Transaction newTransaction = new Transaction(200, false, false, todayNormalised());
-        final Pair<Account, Transaction> pair = simpleAccountsDaoFactory.getTransactionsDao().
+        final Pair<Account, Transaction> pair = beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
         Assert.assertEquals(5400, pair.getFirst().getCurrentBalance());
         // initial balance should not change
@@ -214,13 +214,13 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void accountsCanBeListed() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account accountOne = createTestAccount();
-        final Account savedAccountOne = saveTestAccount(simpleAccountsDaoFactory, accountOne);
+        final Account savedAccountOne = saveTestAccount(beanMinderDaoFactory, accountOne);
         final Account accountTwo = createSecondTestAccount();
-        final Account savedAccountTwo = saveTestAccount(simpleAccountsDaoFactory, accountTwo);
+        final Account savedAccountTwo = saveTestAccount(beanMinderDaoFactory, accountTwo);
 
-        final List<Account> allAccounts = simpleAccountsDaoFactory.getAccountsDao().findAllAccounts();
+        final List<Account> allAccounts = beanMinderDaoFactory.getAccountsDao().findAllAccounts();
         Assert.assertEquals(2, allAccounts.size());
         Assert.assertFalse(allAccounts.get(0).equals(allAccounts.get(1)));
         // ordered by name
@@ -234,20 +234,20 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
     @Test
     public void deleteAccountDeletesAccountAndAllReferencedTransactions() {
         final InstanceSet<DAOFactory> daoFactories = createTestDatabaseReturningAllDAOFactories();
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = daoFactories.getInstanceOf(BeanMinderDAOFactory.class);
+        final BeanMinderDAOFactory beanMinderDaoFactory = daoFactories.getInstanceOf(BeanMinderDAOFactory.class);
         final MiniMiserDAOFactory minimiserDaoFactory = daoFactories.getInstanceOf(MiniMiserDAOFactory.class);
         final SimpleJdbcTemplate simpleJdbcTemplate = minimiserDaoFactory.getSQLAccess().getSimpleJdbcTemplate();
 
         final Account account = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, account);
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory, account);
         final Transaction newTransaction = new Transaction(200, true, false, todayNormalised());
-        final Pair<Account, Transaction> pair = simpleAccountsDaoFactory.getTransactionsDao().
+        final Pair<Account, Transaction> pair = beanMinderDaoFactory.getTransactionsDao().
             saveTransaction(savedAccount, newTransaction);
         final Transaction savedTransaction = pair.getSecond();
         checkAccountExistence(simpleJdbcTemplate, savedAccount.getId(), true);
         checkTransactionExistence(simpleJdbcTemplate, savedTransaction.getId(), true);
 
-        simpleAccountsDaoFactory.getAccountsDao().deleteAccount(savedAccount);
+        beanMinderDaoFactory.getAccountsDao().deleteAccount(savedAccount);
 
         checkAccountExistence(simpleJdbcTemplate, savedAccount.getId(), false);
         checkTransactionExistence(simpleJdbcTemplate, savedTransaction.getId(), false);
@@ -272,7 +272,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotDeleteAnUnsavedAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-        simpleAccountsDaoFactory.getAccountsDao().deleteAccount(createTestAccount());
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
+        beanMinderDaoFactory.getAccountsDao().deleteAccount(createTestAccount());
     }
 }

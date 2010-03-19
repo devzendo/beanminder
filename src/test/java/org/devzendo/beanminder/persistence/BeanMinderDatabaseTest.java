@@ -94,9 +94,9 @@ public abstract class BeanMinderDatabaseTest {
         final InstanceSet<DAOFactory> database =
             getPersistencePluginHelper().createDatabase(
                 DBNAME, DBPASSWORD);
-        final BeanMinderDAOFactory simpleAccountsDaoFactory =
+        final BeanMinderDAOFactory beanMinderDaoFactory =
             database.getInstanceOf(BeanMinderDAOFactory.class);
-        return simpleAccountsDaoFactory;
+        return beanMinderDaoFactory;
     }
 
     /**
@@ -133,14 +133,14 @@ public abstract class BeanMinderDatabaseTest {
 
     /**
      * Save a test account.
-     * @param simpleAccountsDaoFactory the DAO Factory
+     * @param beanMinderDaoFactory the DAO Factory
      * @param account the account to save
      * @return the saved account
      */
     protected final Account saveTestAccount(
-            final BeanMinderDAOFactory simpleAccountsDaoFactory, final Account account) {
+            final BeanMinderDAOFactory beanMinderDaoFactory, final Account account) {
         final Account savedAccount =
-            simpleAccountsDaoFactory.getAccountsDao().saveAccount(account);
+            beanMinderDaoFactory.getAccountsDao().saveAccount(account);
         return savedAccount;
     }
 

@@ -43,8 +43,8 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void transactionsCannotBeAddedToAnUnsavedAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-        simpleAccountsDaoFactory.getTransactionsDao().saveTransaction(createTestAccount(),
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
+        beanMinderDaoFactory.getTransactionsDao().saveTransaction(createTestAccount(),
             new Transaction(200, true, false, todayNormalised()));
     }
 
@@ -53,12 +53,12 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void numberOfTransactionsIsCorrectAfterSavingTransactions() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
         final Date todayNormalised = todayNormalised();
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         Assert.assertEquals(0, transactionsDao.getNumberOfTransactions(savedAccount));
         transactionsDao.saveTransaction(savedAccount,
             new Transaction(200, true, false, todayNormalised));
@@ -73,9 +73,9 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void transactionsHaveMonotonicallyIncreasingIndexAndCorrectAccountBalance() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount(); // balance 5600
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
         final Date todayNormalised = todayNormalised();
         // Transaction 1
@@ -84,7 +84,7 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
         Assert.assertEquals(-1, newTransaction1.getIndex()); // HMMM internal detail?
         Assert.assertEquals(-1, newTransaction1.getAccountBalance()); // HMMM internal detail?
 
-        final Pair<Account, Transaction> pair1 = simpleAccountsDaoFactory
+        final Pair<Account, Transaction> pair1 = beanMinderDaoFactory
                 .getTransactionsDao().saveTransaction(savedAccount,
                     newTransaction1);
         final Account savedAccount1 = pair1.getFirst();
@@ -96,7 +96,7 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
         // Transaction 2
         final Transaction newTransaction2 = new Transaction(20, true, false,
             todayNormalised); // +20 = 5820
-        final Pair<Account, Transaction> pair2 = simpleAccountsDaoFactory
+        final Pair<Account, Transaction> pair2 = beanMinderDaoFactory
                 .getTransactionsDao().saveTransaction(savedAccount,
                     newTransaction2);
         final Account savedAccount2 = pair2.getFirst();
@@ -108,7 +108,7 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
         // Transaction 3
         final Transaction newTransaction3 = new Transaction(10, false, false,
             todayNormalised); // -10 = 5810
-        final Pair<Account, Transaction> pair3 = simpleAccountsDaoFactory
+        final Pair<Account, Transaction> pair3 = beanMinderDaoFactory
                 .getTransactionsDao().saveTransaction(savedAccount,
                     newTransaction3);
         final Account savedAccount3 = pair3.getFirst();
@@ -126,11 +126,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
         // if the select is not ordered by index, this insertion seems to yield
         // a list in the order inserted here, but it needs the ORDER BY index
         // ASC for correctness, so I'll test for it anyway
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         final Date todayNormalised = todayNormalised();
         // Transaction 0
         final Transaction newTransaction0 = new Transaction(200, true, false,
@@ -162,11 +162,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void updateATransactionAndSubsequentTransactionsAndAccountBalanceUpdated() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         final Date todayNormalised = todayNormalised();
         // Transaction 0
         final Transaction newTransaction0 = new Transaction(200, true, false,
@@ -225,11 +225,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void updateATransactionByAlsoChangingCreditDebitFlag() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         final Date todayNormalised = todayNormalised();
         // Transaction 0
         final Transaction newTransaction0 = new Transaction(200, true, false,
@@ -272,11 +272,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void deleteATransactionAndSubsequentTransactionsAndAccountBalanceUpdated() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         final Date todayNormalised = todayNormalised();
         // Transaction 0
         final Transaction newTransaction0 = new Transaction(200, true, false,
@@ -330,8 +330,8 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotDeleteATransactionGivenAnUnsavedAccount() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
-        simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(createTestAccount(),
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
+        beanMinderDaoFactory.getTransactionsDao().deleteTransaction(createTestAccount(),
             new Transaction(200, true, false, todayNormalised()));
     }
 
@@ -340,11 +340,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotDeleteAnUnsavedTransaction() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        simpleAccountsDaoFactory.getTransactionsDao().deleteTransaction(savedAccount,
+        beanMinderDaoFactory.getTransactionsDao().deleteTransaction(savedAccount,
             new Transaction(200, true, false, todayNormalised()));
     }
 
@@ -353,11 +353,11 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void transactionsCanBeFoundByIndexRange() {
-        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
-        final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory,
+        final Account savedAccount = saveTestAccount(beanMinderDaoFactory,
             newAccount);
-        final TransactionsDao transactionsDao = simpleAccountsDaoFactory.getTransactionsDao();
+        final TransactionsDao transactionsDao = beanMinderDaoFactory.getTransactionsDao();
         final Date todayNormalised = todayNormalised();
         transactionsDao.saveTransaction(savedAccount, new Transaction(200, true, false,
                 todayNormalised));
@@ -408,9 +408,9 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotFindTransactionsByIndexRangeForAnUnsavedAccount() {
-       final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+       final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
        final Account newAccount = createTestAccount();
-       simpleAccountsDaoFactory.getTransactionsDao().findAllTransactionsForAccountByIndexRange(newAccount, 0, 0);
+       beanMinderDaoFactory.getTransactionsDao().findAllTransactionsForAccountByIndexRange(newAccount, 0, 0);
     }
 
     /**
@@ -418,8 +418,8 @@ public final class TestTransactionsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotFindAllTransactionsForAnUnsavedAccount() {
-       final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+       final BeanMinderDAOFactory beanMinderDaoFactory = createTestDatabase();
        final Account newAccount = createTestAccount();
-       simpleAccountsDaoFactory.getTransactionsDao().findAllTransactionsForAccount(newAccount);
+       beanMinderDaoFactory.getTransactionsDao().findAllTransactionsForAccount(newAccount);
    }
 }

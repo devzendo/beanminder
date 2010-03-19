@@ -19,7 +19,7 @@ package org.devzendo.beanminder.persistence;
 import java.sql.Date;
 import java.util.List;
 
-import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.dao.AccountsDao;
 import org.devzendo.beanminder.persistence.dao.TransactionsDao;
 import org.devzendo.beanminder.persistence.domain.Account;
@@ -48,7 +48,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void createEmptyAccount() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final AccountsDao accountsDao = simpleAccountsDaoFactory.getAccountsDao();
         final Account newAccount = createTestAccount();
         final Account savedAccount =
@@ -78,7 +78,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void someAccountDetailsCanBeChanged() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final AccountsDao accountsDao =
             simpleAccountsDaoFactory.getAccountsDao();
 
@@ -109,7 +109,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataAccessException.class)
     public void cannotCommitTransactionAgainstUnsavedAccount() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         // note: unsaved Account
         simpleAccountsDaoFactory.
@@ -122,7 +122,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithNegativeAmounts() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
 
@@ -136,7 +136,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void cannotCommitTransactionsWithZeroAmounts() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
 
@@ -150,7 +150,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void transactionCanBeAddedToAccount() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
 
@@ -180,7 +180,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void addCreditTransactionToAccountIncreasesBalance() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
 
@@ -197,7 +197,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void addDebitTransactionToAccountDecreasesBalance() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account newAccount = createTestAccount();
         final Account savedAccount = saveTestAccount(simpleAccountsDaoFactory, newAccount);
 
@@ -214,7 +214,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test
     public void accountsCanBeListed() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         final Account accountOne = createTestAccount();
         final Account savedAccountOne = saveTestAccount(simpleAccountsDaoFactory, accountOne);
         final Account accountTwo = createSecondTestAccount();
@@ -234,7 +234,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
     @Test
     public void deleteAccountDeletesAccountAndAllReferencedTransactions() {
         final InstanceSet<DAOFactory> daoFactories = createTestDatabaseReturningAllDAOFactories();
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = daoFactories.getInstanceOf(SimpleAccountsDAOFactory.class);
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = daoFactories.getInstanceOf(BeanMinderDAOFactory.class);
         final MiniMiserDAOFactory minimiserDaoFactory = daoFactories.getInstanceOf(MiniMiserDAOFactory.class);
         final SimpleJdbcTemplate simpleJdbcTemplate = minimiserDaoFactory.getSQLAccess().getSimpleJdbcTemplate();
 
@@ -272,7 +272,7 @@ public final class TestAccountsDao extends BeanMinderDatabaseTest {
      */
     @Test(expected = DataIntegrityViolationException.class)
     public void cannotDeleteAnUnsavedAccount() {
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory = createTestDatabase();
+        final BeanMinderDAOFactory simpleAccountsDaoFactory = createTestDatabase();
         simpleAccountsDaoFactory.getAccountsDao().deleteAccount(createTestAccount());
     }
 }

@@ -26,7 +26,7 @@ import org.devzendo.minimiser.persistence.DAOFactory;
  * @author matt
  *
  */
-public interface SimpleAccountsDAOFactory extends DAOFactory {
+public interface BeanMinderDAOFactory extends DAOFactory {
     /**
      * @return the AccountsDao
      */

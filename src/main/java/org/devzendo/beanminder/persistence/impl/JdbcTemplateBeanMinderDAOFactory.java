@@ -16,7 +16,7 @@
 
 package org.devzendo.beanminder.persistence.impl;
 
-import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.dao.AccountsDao;
 import org.devzendo.beanminder.persistence.dao.TransactionsDao;
 import org.devzendo.beanminder.persistence.dao.impl.JdbcTemplateAccountsDao;
@@ -25,13 +25,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 
 /**
- * The JdbcTemplate implementation of the SimpleAccountsDAOFactory.
+ * The JdbcTemplate implementation of the BeanMinderDAOFactory.
  *
  * @author matt
  *
  */
-public final class JdbcTemplateSimpleAccountsDAOFactory implements
-        SimpleAccountsDAOFactory {
+public final class JdbcTemplateBeanMinderDAOFactory implements
+        BeanMinderDAOFactory {
 
     private final JdbcTemplateAccountsDao mAccountsDao;
     private final JdbcTemplateTransactionsDao mTransactionsDao;
@@ -41,7 +41,7 @@ public final class JdbcTemplateSimpleAccountsDAOFactory implements
      *
      * @param jdbcTemplate the Jdbc Template.
      */
-    public JdbcTemplateSimpleAccountsDAOFactory(final SimpleJdbcTemplate jdbcTemplate) {
+    public JdbcTemplateBeanMinderDAOFactory(final SimpleJdbcTemplate jdbcTemplate) {
         mAccountsDao = new JdbcTemplateAccountsDao(jdbcTemplate);
         mTransactionsDao = new JdbcTemplateTransactionsDao(jdbcTemplate);
         // cross-wire since transactionsdao needs to update accounts

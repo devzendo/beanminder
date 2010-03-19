@@ -16,8 +16,8 @@
 
 package org.devzendo.beanminder.plugin.facade.databaseopening;
 
-import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
-import org.devzendo.beanminder.persistence.impl.JdbcTemplateSimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
+import org.devzendo.beanminder.persistence.impl.JdbcTemplateBeanMinderDAOFactory;
 import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
 import org.devzendo.minimiser.util.InstancePair;
@@ -39,8 +39,8 @@ public final class BeanMinderDatabaseOpeningFacade implements
     public InstancePair<DAOFactory> createDAOFactory(
             final SimpleJdbcTemplate jdbcTemplate,
             final SingleConnectionDataSource dataSource) {
-        final SimpleAccountsDAOFactory daoFactory =
-            new JdbcTemplateSimpleAccountsDAOFactory(jdbcTemplate);
-        return new InstancePair<DAOFactory>(SimpleAccountsDAOFactory.class, daoFactory);
+        final BeanMinderDAOFactory daoFactory =
+            new JdbcTemplateBeanMinderDAOFactory(jdbcTemplate);
+        return new InstancePair<DAOFactory>(BeanMinderDAOFactory.class, daoFactory);
     }
 }

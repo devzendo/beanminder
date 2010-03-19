@@ -18,7 +18,7 @@ package org.devzendo.beanminder.persistence;
 
 import java.sql.Date;
 
-import org.devzendo.beanminder.persistence.SimpleAccountsDAOFactory;
+import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.domain.Account;
 import org.devzendo.commoncode.datetime.SQLDateUtils;
 import org.devzendo.minimiser.persistence.DAOFactory;
@@ -87,21 +87,21 @@ public abstract class BeanMinderDatabaseTest {
 
     /**
      * Create the test database, returning the DAO Factory
-     * @return the SimpleAccountsDAOFactory.
+     * @return the BeanMinderDAOFactory.
      *
      */
-    protected final SimpleAccountsDAOFactory createTestDatabase() {
+    protected final BeanMinderDAOFactory createTestDatabase() {
         final InstanceSet<DAOFactory> database =
             getPersistencePluginHelper().createDatabase(
                 DBNAME, DBPASSWORD);
-        final SimpleAccountsDAOFactory simpleAccountsDaoFactory =
-            database.getInstanceOf(SimpleAccountsDAOFactory.class);
+        final BeanMinderDAOFactory simpleAccountsDaoFactory =
+            database.getInstanceOf(BeanMinderDAOFactory.class);
         return simpleAccountsDaoFactory;
     }
 
     /**
      * Create the test database, returning the set of DAO Factories
-     * @return the SimpleAccountsDAOFactory.
+     * @return the BeanMinderDAOFactory.
      *
      */
     protected final InstanceSet<DAOFactory> createTestDatabaseReturningAllDAOFactories() {
@@ -138,7 +138,7 @@ public abstract class BeanMinderDatabaseTest {
      * @return the saved account
      */
     protected final Account saveTestAccount(
-            final SimpleAccountsDAOFactory simpleAccountsDaoFactory, final Account account) {
+            final BeanMinderDAOFactory simpleAccountsDaoFactory, final Account account) {
         final Account savedAccount =
             simpleAccountsDaoFactory.getAccountsDao().saveAccount(account);
         return savedAccount;

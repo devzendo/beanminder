@@ -17,13 +17,17 @@
 package org.devzendo.beanminder.plugin.facade.providemenu;
 
 import org.devzendo.beanminder.plugin.BeanMinderApplicationPlugin;
+import org.devzendo.minimiser.gui.dialog.problem.ProblemReporter;
+import org.devzendo.minimiser.gui.dialog.problem.StubProblemReporter;
+import org.devzendo.minimiser.gui.menu.ApplicationMenu;
+import org.devzendo.minimiser.gui.menu.MenuFacadeImpl;
+import org.devzendo.minimiser.gui.menu.MenuProvidingFacadeInitialiser;
 import org.devzendo.minimiser.openlist.OpenDatabaseList;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -46,15 +50,16 @@ public final class TestViewMenu {
         Assert.assertTrue(
             "Our plugin is not loaded",
             pluginHelper.getApplicationPlugin() instanceof BeanMinderApplicationPlugin);
-//        new MenuProvidingFacadeInitialiser(pluginHelper.getPluginManager(), openDatabaseList,
-//            menu, globalApplicationMenu, problemReporter)
+        final ApplicationMenu globalApplicationMenu = new ApplicationMenu();
+        final ProblemReporter problemReporter = new StubProblemReporter();
+        new MenuProvidingFacadeInitialiser(pluginHelper.getPluginManager(), openDatabaseList,
+            new MenuFacadeImpl(null), globalApplicationMenu, problemReporter);
     }
 
     /**
      *
      */
     @Test
-    @Ignore
     public void accountsAreListedInViewMenu() {
         Assert.fail("oh boy, this is going to be one scary integration test");
     }

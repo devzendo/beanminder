@@ -16,7 +16,6 @@
 
 package org.devzendo.beanminder.plugin;
 
-import org.devzendo.beanminder.plugin.BeanMinderApplicationPlugin;
 import org.devzendo.minimiser.pluginmanager.PluginException;
 import org.devzendo.minimiser.pluginmanager.PluginHelper;
 import org.devzendo.minimiser.pluginmanager.PluginHelperFactory;

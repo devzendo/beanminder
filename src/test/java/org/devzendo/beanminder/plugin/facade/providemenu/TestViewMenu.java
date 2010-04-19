@@ -39,7 +39,7 @@ import org.junit.Test;
  */
 public final class TestViewMenu {
     /**
-     * @throws PluginException
+     * @throws PluginException on error
      *
      */
     @Before

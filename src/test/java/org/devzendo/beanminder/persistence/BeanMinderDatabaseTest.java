@@ -18,7 +18,6 @@ package org.devzendo.beanminder.persistence;
 
 import java.sql.Date;
 
-import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.domain.Account;
 import org.devzendo.commoncode.datetime.SQLDateUtils;
 import org.devzendo.minimiser.persistence.DAOFactory;

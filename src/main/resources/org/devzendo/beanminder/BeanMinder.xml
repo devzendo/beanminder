@@ -14,4 +14,9 @@
 	<bean id="menuProvidingFacade" 
 		class="org.devzendo.beanminder.plugin.facade.providemenu.BeanMinderMenuProvidingFacade" />
 
+    <bean id="accountTab" 
+        class="org.devzendo.beanminder.gui.tab.AccountsTab">
+        	<constructor-arg ref="databaseDescriptor" />
+	</bean>
+
 </beans>

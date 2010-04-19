@@ -19,7 +19,6 @@ package org.devzendo.beanminder.persistence;
 import java.sql.Date;
 import java.util.List;
 
-import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.dao.AccountsDao;
 import org.devzendo.beanminder.persistence.dao.TransactionsDao;
 import org.devzendo.beanminder.persistence.domain.Account;

@@ -21,7 +21,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.dao.TransactionsDao;
 import org.devzendo.beanminder.persistence.domain.Account;
 import org.devzendo.beanminder.persistence.domain.Transaction;

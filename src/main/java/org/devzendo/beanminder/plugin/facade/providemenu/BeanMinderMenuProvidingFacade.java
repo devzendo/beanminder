@@ -24,15 +24,20 @@ import org.devzendo.minimiser.openlist.DatabaseDescriptor;
 import org.devzendo.minimiser.openlist.DatabaseEvent;
 import org.devzendo.minimiser.openlist.DatabaseOpenedEvent;
 import org.devzendo.minimiser.openlist.OpenDatabaseList;
-import org.devzendo.minimiser.openlist.DatabaseDescriptor.AttributeIdentifier;
 import org.devzendo.minimiser.plugin.facade.providemenu.MenuProvidingFacade;
 
+/**
+ * @author matt
+ *
+ */
 public class BeanMinderMenuProvidingFacade implements MenuProvidingFacade {
+    /**
+     * {@inheritDoc}
+     */
     public void initialise(
             final ApplicationMenu globalApplicationMenu,
             final OpenDatabaseList openDatabaseList,
             final MenuFacade menuFacade) {
-        // TODO Auto-generated method stub
         openDatabaseList.addDatabaseEventObserver(new Observer<DatabaseEvent>() {
             public void eventOccurred(final DatabaseEvent databaseEvent) {
                 if (databaseEvent instanceof DatabaseOpenedEvent) {
@@ -43,15 +48,18 @@ public class BeanMinderMenuProvidingFacade implements MenuProvidingFacade {
 
             private void handleDatabaseOpenedEvent(
                     final DatabaseOpenedEvent databaseOpenedEvent) {
-                final DatabaseDescriptor databaseDescriptor = databaseOpenedEvent.getDatabaseDescriptor();
-                final ApplicationMenu databaseApplicationMenu = (ApplicationMenu) databaseDescriptor.getAttribute(AttributeIdentifier.ApplicationMenu);
+                final DatabaseDescriptor databaseDescriptor = 
+                    databaseOpenedEvent.getDatabaseDescriptor();
+                final ApplicationMenu databaseApplicationMenu = 
+                    databaseDescriptor.getApplicationMenu();
                 populateDatabaseApplicationMenu(databaseApplicationMenu);
 
             }
 
             private void populateDatabaseApplicationMenu(
                     final ApplicationMenu databaseApplicationMenu) {
-                databaseApplicationMenu.addViewMenuTabIdentifier(new TabIdentifier("GOATS", "Goats", false, 'G', "goatTab", null));
+                databaseApplicationMenu.addViewMenuTabIdentifier(
+                    new TabIdentifier("ACCOUNTS", "Accounts", false, 'A', "accountTab", null));
                 menuFacade.rebuildViewMenu();
             }
         });

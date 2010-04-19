@@ -16,13 +16,14 @@
 
 package org.devzendo.beanminder.plugin.facade.databaseopening;
 
+import javax.sql.DataSource;
+
 import org.devzendo.beanminder.persistence.BeanMinderDAOFactory;
 import org.devzendo.beanminder.persistence.impl.JdbcTemplateBeanMinderDAOFactory;
 import org.devzendo.minimiser.persistence.DAOFactory;
 import org.devzendo.minimiser.plugin.facade.opendatabase.DatabaseOpeningFacade;
 import org.devzendo.minimiser.util.InstancePair;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 
 /**
@@ -37,8 +38,8 @@ public final class BeanMinderDatabaseOpeningFacade implements
      * {@inheritDoc}
      */
     public InstancePair<DAOFactory> createDAOFactory(
-            final SimpleJdbcTemplate jdbcTemplate,
-            final SingleConnectionDataSource dataSource) {
+            final DataSource dataSource,
+            final SimpleJdbcTemplate jdbcTemplate) {
         final BeanMinderDAOFactory daoFactory =
             new JdbcTemplateBeanMinderDAOFactory(jdbcTemplate);
         return new InstancePair<DAOFactory>(BeanMinderDAOFactory.class, daoFactory);

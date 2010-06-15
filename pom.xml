@@ -4,6 +4,7 @@
 	<groupId>org.devzendo</groupId>
 	<artifactId>BeanMinder</artifactId>
 	<version>0.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>BeanMinder</name>
 	<description>A simple home financial management application.
 	The sample application for the MiniMiser Framework User Guide
@@ -14,42 +15,8 @@
         <artifactId>GroupParent</artifactId>
 	    <version>1.0.0</version>
     </parent>
-    
-	<dependencies>
-		<dependency>
-			<groupId>org.devzendo</groupId>
-			<artifactId>MiniMiser</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.devzendo</groupId>
-			<artifactId>MiniMiser</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
-			<classifier>tests</classifier>
-			<scope>test</scope>	
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymock</artifactId>
-			<version>2.3</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymockclassextension</artifactId>
-			<version>2.3</version>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
+    <modules>
+    	<module>BeanMinderCore</module>
+    	<module>BeanMinderMacOSX</module>
+    </modules>
 </project>

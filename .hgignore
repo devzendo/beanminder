@@ -5,3 +5,7 @@ syntax: regexp
 ^BeanMinderCore/target$
 syntax: regexp
 ^BeanMinderMacOSX/target$
+syntax: regexp
+^BeanMinderLinux/target$
+syntax: regexp
+^BeanMinderWindows/target$

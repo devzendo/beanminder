@@ -20,6 +20,7 @@
 
   <build>
     <plugins>
+      <!-- Create the Windows launcher structure under target/windows. -->
       <plugin>
         <groupId>org.devzendo</groupId>
         <artifactId>CrossPlatformLauncherPlugin</artifactId>
@@ -39,6 +40,7 @@
         </executions>
       </plugin>
       
+      <!-- Package the above launcher structure into a .zip archive -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
@@ -65,5 +67,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

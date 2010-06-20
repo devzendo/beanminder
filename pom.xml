@@ -18,5 +18,7 @@
     <modules>
     	<module>BeanMinderCore</module>
     	<module>BeanMinderMacOSX</module>
+    	<module>BeanMinderLinux</module>
+    	<module>BeanMinderWindows</module>
     </modules>
 </project>

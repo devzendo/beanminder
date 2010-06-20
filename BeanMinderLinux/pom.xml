@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.devzendo</groupId>
   <artifactId>BeanMinderLinux</artifactId>
-  <name>The Linux specific parts of BeanMinder</name>
+  <name>BeanMinderLinux</name>
   <version>0.2.0-SNAPSHOT</version>
 
   <parent>

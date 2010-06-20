@@ -1,12 +1,71 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <artifactId>BeanMinder</artifactId>
-    <groupId>org.devzendo</groupId>
-    <version>0.2.0-SNAPSHOT</version>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.devzendo</groupId>
   <artifactId>BeanMinderLinux</artifactId>
   <name>The Linux specific parts of BeanMinder</name>
   <version>0.2.0-SNAPSHOT</version>
+
+  <parent>
+    <artifactId>BeanMinder</artifactId>
+    <groupId>org.devzendo</groupId>
+    <version>0.2.0-SNAPSHOT</version>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.devzendo</groupId>
+      <artifactId>BeanMinderCore</artifactId>
+      <version>0.2.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.devzendo</groupId>
+        <artifactId>CrossPlatformLauncherPlugin</artifactId>
+        <configuration>
+          <os>Linux</os>
+          <applicationName>BeanMinder</applicationName>
+          <mainClassName>org.devzendo.minimiser.MiniMiser</mainClassName>
+        </configuration>
+        <executions>
+          <execution>
+            <id>createlauncher</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>createlauncher</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>linux-launcher-distribution</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.devzendo</groupId>
+            <artifactId>CrossPlatformLauncherPlugin</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+ 
 </project>

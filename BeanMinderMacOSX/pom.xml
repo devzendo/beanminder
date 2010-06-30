@@ -37,7 +37,7 @@
           <applicationName>BeanMinder</applicationName>
           <mainClassName>org.devzendo.minimiser.MiniMiser</mainClassName>
           <iconsFileName>BeanMinder.icns</iconsFileName>
-          <bundleSignature>BM</bundleSignature>
+          <!-- I don't have an assigned creator code <bundleSignature>BM</bundleSignature> -->
         </configuration>
         <executions>
           <execution>

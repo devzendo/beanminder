@@ -3,25 +3,25 @@
   <groupId>org.devzendo</groupId>
   <artifactId>BeanMinderMacOSX</artifactId>
   <name>BeanMinderMacOSX</name>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.2.0</version>
   
   <parent>
     <artifactId>BeanMinder</artifactId>
     <groupId>org.devzendo</groupId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
   </parent>
   
   <dependencies>
     <dependency>
       <groupId>org.devzendo</groupId>
       <artifactId>BeanMinderCore</artifactId>
-      <version>0.2.0-SNAPSHOT</version>
+      <version>0.2.0</version>
     </dependency>
     <dependency> <!-- Not released in central -->
       <groupId>ch.randelshofer</groupId>
       <artifactId>libquaqua</artifactId>
       <type>zip</type>
-      <version>6.5</version>
+      <version>7.3.4</version>
     </dependency>
   </dependencies>
   
@@ -32,7 +32,7 @@
       <plugin>
         <groupId>org.devzendo</groupId>
         <artifactId>CrossPlatformLauncherPlugin</artifactId>
-        <version>0.2.1-SNAPSHOT</version>
+        <version>0.2.1</version>
         <configuration>
           <os>MacOSX</os>
           <applicationName>BeanMinder</applicationName>
@@ -68,7 +68,7 @@
                 <artifactItem>
                   <groupId>ch.randelshofer</groupId>
                   <artifactId>libquaqua</artifactId>
-                  <version>6.5</version>
+                  <version>7.3.4</version>
                   <type>zip</type>
                   <overWrite>true</overWrite>
                   <includes>*</includes>
@@ -93,7 +93,7 @@
           <dependency>
             <groupId>org.devzendo</groupId>
             <artifactId>CrossPlatformLauncherPlugin</artifactId>
-            <version>0.2.1-SNAPSHOT</version>
+            <version>0.2.1</version>
           </dependency>
         </dependencies>
         <executions>

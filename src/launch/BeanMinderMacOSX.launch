@@ -9,7 +9,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.devzendo.minimiser.MiniMiser"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-classes -threads -times -level"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-classes -threads -times -level -debug"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="BeanMinderCore"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea -Djava.library.path=${project_loc:BeanMinderMacOSX}/target/macosx/BeanMinder.app/Contents/Resources/Java/lib -Xdock:name=BeanMinder"/>

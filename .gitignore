@@ -1,0 +1,8 @@
+.DS_Store
+*.iml
+.idea
+target
+BeanMinderCore/target
+BeanMinderMacOSX/target
+BeanMinderLinux/target
+BeanMinderWindows/target
